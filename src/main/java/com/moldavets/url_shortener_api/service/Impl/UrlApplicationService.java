@@ -7,6 +7,8 @@ import com.moldavets.url_shortener_api.model.dto.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.service.UrlService;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
+
 
 @Service
 public class UrlApplicationService {
@@ -19,8 +21,8 @@ public class UrlApplicationService {
         this.shortUrlGenerator = new ShortUrlGenerator();
     }
 
-    public UrlResponseLongUrlDto getLongUrl(String shortUrl) {
-        return new UrlResponseLongUrlDto(urlService.getByShortUrl(shortUrl).getLongUrl());
+    public URI getLongUrl(String shortUrl) {
+        return URI.create(urlService.getByShortUrl(shortUrl).getLongUrl());
     }
 
     public UrlResponseShortUrlDto createShortUrl(UrlRequestDto urlRequestDto) {
