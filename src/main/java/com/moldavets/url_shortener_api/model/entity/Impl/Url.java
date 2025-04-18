@@ -29,8 +29,10 @@ public class Url extends AbstractAuditingEntity<Long> {
     public Url() {
     }
 
-    public Url(String longUrl) {
+    public Url(String longUrl, String shortUrl, Instant expiresDate) {
         this.longUrl = longUrl;
+        this.shortUrl = shortUrl;
+        this.expiresDate = expiresDate;
     }
 
     @Override
