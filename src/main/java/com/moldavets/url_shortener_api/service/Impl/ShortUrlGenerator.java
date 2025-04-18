@@ -10,7 +10,7 @@ public class ShortUrlGenerator {
 
     public String generate() {
         StringBuilder shortUrl = new StringBuilder();
-        for(int i = 0 ; i < 4; i++) {
+        for(int i = 0 ; i < 5; i++) {
             shortUrl.append(allowedCharacters[rand.nextInt(0,lengthOfAllowedCharactersArray)]);
         }
         return shortUrl.toString();

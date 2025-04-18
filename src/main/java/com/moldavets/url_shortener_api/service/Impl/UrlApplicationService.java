@@ -4,7 +4,6 @@ import com.moldavets.url_shortener_api.mapper.UrlMapper;
 import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.UrlResponseDto;
 import com.moldavets.url_shortener_api.service.UrlService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
@@ -22,7 +21,6 @@ public class UrlApplicationService {
     public UrlResponseDto createShortUrl(UrlRequestDto urlRequestDto) {
         String longUrl = urlRequestDto.getLongUrl();
         String shortUrl = shortUrlGenerator.generate();
-
         return UrlMapper.to(urlService.save(longUrl, shortUrl));
     }
 

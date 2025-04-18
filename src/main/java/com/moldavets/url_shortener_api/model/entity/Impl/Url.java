@@ -2,9 +2,8 @@ package com.moldavets.url_shortener_api.model.entity.Impl;
 
 import com.moldavets.url_shortener_api.model.entity.AbstractAuditingEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+
 
 import java.time.Instant;
 
@@ -30,6 +29,13 @@ public class Url extends AbstractAuditingEntity<Long> {
     }
 
     public Url(String longUrl, String shortUrl, Instant expiresDate) {
+        this.longUrl = longUrl;
+        this.shortUrl = shortUrl;
+        this.expiresDate = expiresDate;
+    }
+
+    public Url(Long id, String longUrl, String shortUrl, Instant expiresDate) {
+        this.id = id;
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
         this.expiresDate = expiresDate;

@@ -17,7 +17,7 @@ public abstract class AbstractAuditingEntity<T> implements Serializable {
     public abstract T getId();
 
     @CreatedDate
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date")
     private Instant createdDate;
 
     @LastModifiedDate
