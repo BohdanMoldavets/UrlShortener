@@ -1,5 +1,7 @@
 package com.moldavets.url_shortener_api.controller;
 
+import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
+import com.moldavets.url_shortener_api.model.entity.Impl.Url;
 import com.moldavets.url_shortener_api.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,8 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping
-    public ResponseEntity<?> createUrl() {
-        return ResponseEntity.ok("");
+    public ResponseEntity<?> createUrl(@RequestBody UrlRequestDto urlRequestDto) {
+        Url stored = urlService.save(urlRequestDto);
+        return ResponseEntity.ok(stored);
     }
 }
