@@ -10,8 +10,6 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "url")
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Url extends AbstractAuditingEntity<Long> {
 
@@ -27,6 +25,13 @@ public class Url extends AbstractAuditingEntity<Long> {
     private String shortUrl;
 
     private Instant expiresDate;
+
+    public Url() {
+    }
+
+    public Url(String longUrl) {
+        this.longUrl = longUrl;
+    }
 
     @Override
     public Long getId() {
