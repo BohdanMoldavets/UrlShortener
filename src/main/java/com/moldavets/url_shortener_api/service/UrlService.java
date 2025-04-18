@@ -5,4 +5,5 @@ import com.moldavets.url_shortener_api.model.entity.Impl.Url;
 
 public interface UrlService {
     Url save(String longUrl, String shortUrl);
+    Url getByShortUrl(String shortUrl);
 }
