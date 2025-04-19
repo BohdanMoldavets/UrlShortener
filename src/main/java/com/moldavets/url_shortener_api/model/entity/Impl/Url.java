@@ -3,6 +3,7 @@ package com.moldavets.url_shortener_api.model.entity.Impl;
 import com.moldavets.url_shortener_api.model.entity.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import org.hibernate.annotations.Type;
 
 
 import java.time.Instant;

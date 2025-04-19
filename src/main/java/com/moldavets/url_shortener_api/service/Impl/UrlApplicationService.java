@@ -15,6 +15,7 @@ public class UrlApplicationService {
 
     private final UrlService urlService;
     private final ShortUrlGenerator shortUrlGenerator;
+    //todo add cache in redis
 
     public UrlApplicationService(UrlService urlService) {
         this.urlService = urlService;
