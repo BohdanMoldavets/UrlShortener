@@ -1,20 +1,19 @@
 package com.moldavets.url_shortener_api.service.Impl;
 
 import com.moldavets.url_shortener_api.exception.EntityExistsException;
-import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.Url;
 import com.moldavets.url_shortener_api.repository.UrlRepository;
+import com.moldavets.url_shortener_api.service.Saveable;
 import com.moldavets.url_shortener_api.service.UrlService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class UrlServiceImpl implements UrlService {
+public class UrlServiceImpl implements UrlService, Saveable<Url> {
 
     private final UrlRepository urlRepository;
 
