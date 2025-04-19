@@ -3,31 +3,40 @@ package com.moldavets.url_shortener_api.service.Impl;
 import com.moldavets.url_shortener_api.mapper.UrlMapper;
 import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.UrlResponseShortUrlDto;
-import com.moldavets.url_shortener_api.service.UrlService;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 
 
-@org.springframework.stereotype.Service
+@Service
 public class UrlApplicationService {
 
     private final UrlServiceImpl urlService;
     private final ShortUrlGenerator shortUrlGenerator;
+    private final CacheServiceImpl cacheService;
     //todo add cache in redis
 
-    public UrlApplicationService(UrlServiceImpl urlService) {
+    public UrlApplicationService(UrlServiceImpl urlService, CacheServiceImpl cacheService) {
         this.urlService = urlService;
+        this.cacheService = cacheService;
         this.shortUrlGenerator = new ShortUrlGenerator();
     }
 
     public URI getLongUrl(String shortUrl) {
-        return URI.create(urlService.getByShortUrl(shortUrl).getLongUrl());
+        String cachedLongUrl = cacheService.getByShortUrl(shortUrl);
+        if(cachedLongUrl != null) {
+        }
+        return URI.create(cachedLongUrl);
+//        return URI.create(urlService.getByShortUrl(shortUrl).getLongUrl());
     }
 
     public UrlResponseShortUrlDto createShortUrl(UrlRequestDto urlRequestDto) {
         String longUrl = urlRequestDto.getLongUrl();
         String shortUrl = shortUrlGenerator.generate();
-        return UrlMapper.to(urlService.save(longUrl, shortUrl));
+
+        UrlResponseShortUrlDto responseShortUrlDto = UrlMapper.to(urlService.save(longUrl, shortUrl));
+        cacheService.save(longUrl, shortUrl);
+        return responseShortUrlDto;
     }
 
 }
