@@ -1,7 +1,7 @@
 package com.moldavets.url_shortener_api.mapper;
 
-import com.moldavets.url_shortener_api.model.dto.UrlResponseShortUrlDto;
-import com.moldavets.url_shortener_api.model.entity.Impl.Url;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
+import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 
 public final class UrlMapper {
 

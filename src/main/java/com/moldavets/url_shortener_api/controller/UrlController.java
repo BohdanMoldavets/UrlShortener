@@ -1,7 +1,7 @@
 package com.moldavets.url_shortener_api.controller;
 
-import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
-import com.moldavets.url_shortener_api.model.dto.UrlResponseShortUrlDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.service.Impl.UrlApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

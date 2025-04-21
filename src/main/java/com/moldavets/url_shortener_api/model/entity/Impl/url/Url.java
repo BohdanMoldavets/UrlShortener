@@ -1,9 +1,8 @@
-package com.moldavets.url_shortener_api.model.entity.Impl;
+package com.moldavets.url_shortener_api.model.entity.Impl.url;
 
 import com.moldavets.url_shortener_api.model.entity.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
-import org.hibernate.annotations.Type;
 
 
 import java.time.Instant;
@@ -24,7 +23,12 @@ public class Url extends AbstractAuditingEntity<Long> {
     @Column(name = "short_url", nullable = false)
     private String shortUrl;
 
+    @Column(name = "expires_date", nullable = false)
     private Instant expiresDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "link_status", nullable = false)
+    private LinkStatus linkStatus;
 
     public Url() {
     }
@@ -33,13 +37,15 @@ public class Url extends AbstractAuditingEntity<Long> {
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
         this.expiresDate = expiresDate;
+        this.linkStatus = LinkStatus.ACTIVE;
     }
 
-    public Url(Long id, String longUrl, String shortUrl, Instant expiresDate) {
+    public Url(Long id, String longUrl, String shortUrl, Instant expiresDate, LinkStatus linkStatus) {
         this.id = id;
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
         this.expiresDate = expiresDate;
+        this.linkStatus = linkStatus;
     }
 
     @Override
@@ -73,5 +79,13 @@ public class Url extends AbstractAuditingEntity<Long> {
 
     public void setExpiresDate(Instant expiresDate) {
         this.expiresDate = expiresDate;
+    }
+
+    public LinkStatus getLinkStatus() {
+        return linkStatus;
+    }
+
+    public void setLinkStatus(LinkStatus linkStatus) {
+        this.linkStatus = linkStatus;
     }
 }
