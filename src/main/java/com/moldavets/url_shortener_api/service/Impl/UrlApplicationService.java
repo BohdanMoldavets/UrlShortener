@@ -6,6 +6,7 @@ import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -40,7 +41,16 @@ public class UrlApplicationService {
 
     public UrlResponseShortUrlDto createShortUrl(UrlRequestDto urlRequestDto) {
         String longUrl = urlRequestDto.getLongUrl();
-        String shortUrl = shortUrlGenerator.generate();
+        String shortUrl;
+
+        while (true) {
+            shortUrl = shortUrlGenerator.generate();
+            try {
+                urlService.getByShortUrl(shortUrl);
+            } catch (EntityNotFoundException e) {
+                break;
+            }
+        }
 
         UrlResponseShortUrlDto responseShortUrlDto = UrlMapper.to(urlService.save(longUrl, shortUrl));
         cacheService.save(longUrl, shortUrl);
