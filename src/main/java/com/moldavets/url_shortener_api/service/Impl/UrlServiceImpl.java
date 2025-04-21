@@ -1,6 +1,7 @@
 package com.moldavets.url_shortener_api.service.Impl;
 
 import com.moldavets.url_shortener_api.exception.EntityExistsException;
+import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import com.moldavets.url_shortener_api.repository.UrlRepository;
 import com.moldavets.url_shortener_api.service.Saveable;
@@ -31,5 +32,11 @@ public class UrlServiceImpl implements UrlService, Saveable<Url> {
     public Url getByShortUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
+    }
+
+    @Override
+    @Transactional
+    public void updateUrlStatusById(LinkStatus linkStatus, Long id) {
+        urlRepository.updateUrlStatusById(linkStatus, id);
     }
 }

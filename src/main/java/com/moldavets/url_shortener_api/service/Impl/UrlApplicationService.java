@@ -4,6 +4,8 @@ import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.mapper.UrlMapper;
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
+import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
+import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -27,6 +29,12 @@ public class UrlApplicationService {
         if(cachedLongUrl != null) {
             return URI.create(cachedLongUrl);
         }
+
+        Url storedUrl = urlService.getByShortUrl(shortUrl);
+        if(storedUrl != null && storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
+            urlService.updateUrlStatusById(LinkStatus.EXPIRED, storedUrl.getId());
+        }
+
         throw new LinkExpiredException("The short link has expired");
     }
 
