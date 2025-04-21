@@ -24,4 +24,9 @@ public class CacheServiceImpl implements CacheService, Saveable<String> {
         redisTemplate.opsForValue().set(shortUrl, longUrl, 1440, TimeUnit.MINUTES);
         return shortUrl;
     }
+
+    @Override
+    public void deleteByShortUrl(String shortUrl) {
+        redisTemplate.delete(shortUrl);
+    }
 }

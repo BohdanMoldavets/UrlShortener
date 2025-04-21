@@ -29,4 +29,10 @@ public class UrlController {
     public ResponseEntity<UrlResponseShortUrlDto> createShortUrl(@Valid @RequestBody UrlRequestDto urlRequestDto) {
         return new ResponseEntity<>(urlApplicationService.createShortUrl(urlRequestDto),HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{shortUrl}")
+    public ResponseEntity<Void> deleteShortUrl(@PathVariable("shortUrl") String shortUrl) {
+        urlApplicationService.deleteUrl(shortUrl);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

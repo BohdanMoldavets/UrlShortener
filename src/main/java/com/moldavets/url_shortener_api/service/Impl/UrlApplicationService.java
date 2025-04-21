@@ -32,6 +32,7 @@ public class UrlApplicationService {
         }
 
         Url storedUrl = urlService.getByShortUrl(shortUrl);
+
         if(storedUrl != null && storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
             urlService.updateUrlStatusById(LinkStatus.EXPIRED, storedUrl.getId());
         }
@@ -55,6 +56,16 @@ public class UrlApplicationService {
         UrlResponseShortUrlDto responseShortUrlDto = UrlMapper.to(urlService.save(longUrl, shortUrl));
         cacheService.save(longUrl, shortUrl);
         return responseShortUrlDto;
+    }
+
+    public void deleteUrl(String shortUrl) {
+        Url storedUrl = urlService.getByShortUrl(shortUrl);
+        if(storedUrl != null && storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
+            cacheService.deleteByShortUrl(shortUrl);
+            urlService.updateUrlStatusById(LinkStatus.DELETED, storedUrl.getId());
+        } else {
+            throw new LinkExpiredException("The short link has expired");
+        }
     }
 
 }
