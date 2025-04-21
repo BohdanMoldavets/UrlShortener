@@ -19,4 +19,8 @@ public interface UrlRepository extends CrudRepository<Url, Long> {
     @Modifying
     @Query("update Url u set u.linkStatus= :linkStatus where u.id = :id")
     void updateUrlStatusById(LinkStatus linkStatus, Long id);
+
+    @Modifying
+    @Query("update Url u set u.totalClicks = u.totalClicks + 1 where u.shortUrl= :shortUrl")
+    void incrementUrlClicksByShortUrl(String shortUrl);
 }

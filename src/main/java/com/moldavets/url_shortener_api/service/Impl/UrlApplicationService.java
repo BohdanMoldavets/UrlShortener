@@ -28,6 +28,7 @@ public class UrlApplicationService {
     public URI getLongUrl(String shortUrl) {
         String cachedLongUrl = cacheService.getByShortUrl(shortUrl);
         if(cachedLongUrl != null) {
+            urlService.incrementUrlClicksByShortUrl(shortUrl);
             return URI.create(cachedLongUrl);
         }
 
@@ -67,5 +68,4 @@ public class UrlApplicationService {
             throw new LinkExpiredException("The short link has expired");
         }
     }
-
 }

@@ -30,6 +30,9 @@ public class Url extends AbstractAuditingEntity<Long> {
     @Column(name = "link_status", nullable = false)
     private LinkStatus linkStatus;
 
+    @Column(name = "total_clicks", nullable = false)
+    private Long totalClicks;
+
     public Url() {
     }
 
@@ -38,14 +41,16 @@ public class Url extends AbstractAuditingEntity<Long> {
         this.shortUrl = shortUrl;
         this.expiresDate = expiresDate;
         this.linkStatus = LinkStatus.ACTIVE;
+        this.totalClicks = 0L;
     }
 
-    public Url(Long id, String longUrl, String shortUrl, Instant expiresDate, LinkStatus linkStatus) {
+    public Url(Long id, String longUrl, String shortUrl, Instant expiresDate, LinkStatus linkStatus, Long totalClicks) {
         this.id = id;
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
         this.expiresDate = expiresDate;
         this.linkStatus = linkStatus;
+        this.totalClicks = totalClicks;
     }
 
     @Override
@@ -87,5 +92,13 @@ public class Url extends AbstractAuditingEntity<Long> {
 
     public void setLinkStatus(LinkStatus linkStatus) {
         this.linkStatus = linkStatus;
+    }
+
+    public Long getTotalClicks() {
+        return totalClicks;
+    }
+
+    public void setTotalClicks(Long totalClicks) {
+        this.totalClicks = totalClicks;
     }
 }
