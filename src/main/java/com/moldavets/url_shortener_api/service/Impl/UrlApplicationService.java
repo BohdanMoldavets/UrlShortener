@@ -14,7 +14,6 @@ public class UrlApplicationService {
     private final UrlServiceImpl urlService;
     private final ShortUrlGenerator shortUrlGenerator;
     private final CacheServiceImpl cacheService;
-    //todo add cache in redis
 
     public UrlApplicationService(UrlServiceImpl urlService, CacheServiceImpl cacheService) {
         this.urlService = urlService;
@@ -25,9 +24,11 @@ public class UrlApplicationService {
     public URI getLongUrl(String shortUrl) {
         String cachedLongUrl = cacheService.getByShortUrl(shortUrl);
         if(cachedLongUrl != null) {
+            return URI.create(cachedLongUrl);
         }
-        return URI.create(cachedLongUrl);
-//        return URI.create(urlService.getByShortUrl(shortUrl).getLongUrl());
+        URI redirectUri = URI.create(urlService.getByShortUrl(shortUrl).getLongUrl());
+        cacheService.save(redirectUri.toASCIIString(), shortUrl);
+        return redirectUri;
     }
 
     public UrlResponseShortUrlDto createShortUrl(UrlRequestDto urlRequestDto) {
