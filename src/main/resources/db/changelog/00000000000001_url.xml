@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="00000000000001-seq" author="BohdanMoldavets">
+        <createSequence sequenceName="url_sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="00000000000001-url" author="BohdanMoldavets">
+        <createTable tableName="url">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="long_url" type="varchar(765)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_url" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="link_status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_clicks" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expires_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

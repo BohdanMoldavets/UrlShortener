@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Repository
@@ -17,10 +18,10 @@ public interface UrlRepository extends CrudRepository<Url, Long> {
     boolean existsByLongUrl(String longUrl);
 
     @Modifying
-    @Query("update Url u set u.linkStatus= :linkStatus where u.id = :id")
-    void updateUrlStatusById(LinkStatus linkStatus, Long id);
+    @Query("update Url u set u.linkStatus= :linkStatus, u.lastModifiedDate = :updateTime where u.id = :id")
+    void updateUrlStatusById(LinkStatus linkStatus, Instant updateTime, Long id);
 
     @Modifying
-    @Query("update Url u set u.totalClicks = u.totalClicks + 1 where u.shortUrl= :shortUrl")
-    void incrementUrlClicksByShortUrl(String shortUrl);
+    @Query("update Url u set u.totalClicks = u.totalClicks + 1, u.lastModifiedDate = :updateTime where u.shortUrl= :shortUrl")
+    void incrementUrlClicksByShortUrl(String shortUrl, Instant updateTime);
 }

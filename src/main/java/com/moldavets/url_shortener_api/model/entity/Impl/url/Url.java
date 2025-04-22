@@ -13,7 +13,8 @@ import java.time.Instant;
 public class Url extends AbstractAuditingEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //TODO - SEQUENCE AFTER MIGRATION
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "urlSequenceGenerator")
+    @SequenceGenerator(name = "urlSequenceGenerator", sequenceName = "url_sequence", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 

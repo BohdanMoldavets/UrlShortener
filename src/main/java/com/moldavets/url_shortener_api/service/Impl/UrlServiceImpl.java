@@ -34,12 +34,12 @@ public class UrlServiceImpl implements UrlService, Saveable<Url> {
     @Override
     @Transactional
     public void updateUrlStatusById(LinkStatus linkStatus, Long id) {
-        urlRepository.updateUrlStatusById(linkStatus, id);
+        urlRepository.updateUrlStatusById(linkStatus, Instant.now(), id);
     }
 
     @Override
     @Transactional
     public void incrementUrlClicksByShortUrl(String shortUrl) {
-        urlRepository.incrementUrlClicksByShortUrl(shortUrl);
+        urlRepository.incrementUrlClicksByShortUrl(shortUrl, Instant.now());
     }
 }

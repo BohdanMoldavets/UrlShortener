@@ -3,7 +3,6 @@ package com.moldavets.url_shortener_api.exception.handler;
 import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.exception.model.ExceptionDetailsModel;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import java.net.ConnectException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
