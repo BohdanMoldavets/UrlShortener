@@ -102,4 +102,13 @@ public class Url extends AbstractAuditingEntity<Long> {
     public void setTotalClicks(Long totalClicks) {
         this.totalClicks = totalClicks;
     }
+
+    @Override
+    public String toString() {
+        return "Url{" +
+                "id=" + id +
+                ", longUrl='" + longUrl + '\'' +
+                ", shortUrl='" + shortUrl + '\'' +
+                '}';
+    }
 }
