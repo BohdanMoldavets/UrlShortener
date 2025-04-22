@@ -1,6 +1,5 @@
 package com.moldavets.url_shortener_api.service.Impl;
 
-import com.moldavets.url_shortener_api.exception.EntityExistsException;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import com.moldavets.url_shortener_api.repository.UrlRepository;
@@ -8,11 +7,12 @@ import com.moldavets.url_shortener_api.service.Saveable;
 import com.moldavets.url_shortener_api.service.UrlService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
 public class UrlServiceImpl implements UrlService, Saveable<Url> {
 
@@ -21,10 +21,7 @@ public class UrlServiceImpl implements UrlService, Saveable<Url> {
     @Override
     @Transactional
     public Url save(String longUrl, String shortUrl) {
-        if(!urlRepository.existsByLongUrl(longUrl)) {
-            return urlRepository.save(new Url(longUrl, shortUrl, Instant.now().plusSeconds(86400)));
-        }
-        throw new EntityExistsException(String.format("Entity with url - [%s] already exists", longUrl));
+        return urlRepository.save(new Url(longUrl, shortUrl, Instant.now().plusSeconds(2628000)));
     }
 
     @Override

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/urls")
 @RequiredArgsConstructor
 public class UrlController {
 
@@ -25,12 +24,12 @@ public class UrlController {
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
-    @PostMapping
+    @PostMapping("/api/v1/urls")
     public ResponseEntity<UrlResponseShortUrlDto> createShortUrl(@Valid @RequestBody UrlRequestDto urlRequestDto) {
         return new ResponseEntity<>(urlApplicationService.createShortUrl(urlRequestDto),HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{shortUrl}")
+    @DeleteMapping("/api/v1/urls/{shortUrl}")
     public ResponseEntity<Void> deleteShortUrl(@PathVariable("shortUrl") String shortUrl) {
         urlApplicationService.deleteUrl(shortUrl);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
