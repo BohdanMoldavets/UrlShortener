@@ -8,6 +8,7 @@ import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -20,6 +21,9 @@ public class UrlApplicationService {
     private final UrlServiceImpl urlService;
     private final ShortUrlGenerator shortUrlGenerator;
     private final CacheServiceImpl cacheService;
+
+    @Value("${application.hostname}")
+    String applicationHostname;
 
     public UrlApplicationService(UrlServiceImpl urlService, CacheServiceImpl cacheService) {
         this.urlService = urlService;
@@ -39,6 +43,7 @@ public class UrlApplicationService {
         if(storedUrl.getExpiresDate().isAfter(Instant.now())) {
             String storedLongUrl = storedUrl.getLongUrl();
             cacheService.save(storedLongUrl, shortUrl);
+            urlService.incrementUrlClicksByShortUrl(shortUrl);
             return URI.create(storedLongUrl);
         }
 
@@ -63,7 +68,13 @@ public class UrlApplicationService {
         String longUrl = urlRequestDto.getLongUrl();
         String shortUrl = this.createUniqueShortUrl();
 
-        UrlResponseShortUrlDto responseShortUrlDto = UrlMapper.to(urlService.save(longUrl, shortUrl));
+        Url storedUrl = urlService.save(longUrl, shortUrl);
+
+        UrlResponseShortUrlDto responseShortUrlDto =
+                new UrlResponseShortUrlDto(storedUrl.getShortUrl());
+
+        responseShortUrlDto.setShortUrl(String.format("http://%s/%s", applicationHostname, responseShortUrlDto.getShortUrl()));
+
         cacheService.save(longUrl, shortUrl);
         return responseShortUrlDto;
     }
