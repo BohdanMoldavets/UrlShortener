@@ -1,6 +1,9 @@
 package com.moldavets.url_shortener_api.exception.handler;
 
+import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.exception.model.ExceptionDetailsModel;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.net.ConnectException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -24,19 +27,35 @@ public class CustomExceptionHandler {
             "The URL is not allowed. " +
             "You shortened many URLs in a short time.";
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionDetailsModel> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionDetailsModel> handleAllExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(new ExceptionDetailsModel(
                 LocalDateTime.now(),
-                "An error occurred creating the short URL. The URL has not been shortened, possible errors: " + VALIDATION_POSSIBLE_ERRORS,
-                request.getDescription(false)
-        ), HttpStatus.BAD_REQUEST);
+                "An unexpected error occurred. Please try again later",
+                null
+        ), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ExceptionDetailsModel createExceptionDetailsModel(Exception ex, WebRequest request) {
+    @ExceptionHandler(LinkExpiredException.class)
+    public ResponseEntity<ExceptionDetailsModel> handleLinkExpiredException(LinkExpiredException ex, WebRequest request) {
+        return new ResponseEntity<>(createExceptionDetailsModel(ex.getMessage(), request), HttpStatus.GONE);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ExceptionDetailsModel> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(createExceptionDetailsModel("Link not found", request), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionDetailsModel> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
+        return new ResponseEntity<>(createExceptionDetailsModel(VALIDATION_POSSIBLE_ERRORS, request), HttpStatus.BAD_REQUEST);
+    }
+
+    private ExceptionDetailsModel createExceptionDetailsModel(String message, WebRequest request) {
         return new ExceptionDetailsModel(
                 LocalDateTime.now(),
-                ex.getMessage(),
+                message,
                 request.getDescription(false)
         );
     }

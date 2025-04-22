@@ -2,10 +2,8 @@ package com.moldavets.url_shortener_api.model.dto.url;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 
 import java.time.Instant;
 

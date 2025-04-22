@@ -70,11 +70,9 @@ public class UrlApplicationService {
 
     public void deleteUrl(String shortUrl) {
         Url storedUrl = urlService.getByShortUrl(shortUrl);
-        if(storedUrl != null && storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
+        if(storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
             cacheService.deleteByShortUrl(shortUrl);
             urlService.updateUrlStatusById(LinkStatus.DELETED, storedUrl.getId());
-        } else {
-            throw new LinkExpiredException("The short link has expired");
         }
     }
 
