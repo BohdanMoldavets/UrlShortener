@@ -3,6 +3,7 @@ package com.moldavets.url_shortener_api.service.Impl;
 import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.mapper.UrlMapper;
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
@@ -45,6 +46,17 @@ public class UrlApplicationService {
             urlService.updateUrlStatusById(LinkStatus.EXPIRED, storedUrl.getId());
         }
         throw new LinkExpiredException("The short link has expired");
+    }
+
+    public UrlResponseInfoDto getInfoByShortUrl(String shortUrl) {
+        Url storedUrl = urlService.getByShortUrl(shortUrl);
+        return new UrlResponseInfoDto(
+                storedUrl.getLongUrl(),
+                shortUrl,
+                storedUrl.getExpiresDate(),
+                storedUrl.getLinkStatus(),
+                storedUrl.getTotalClicks()
+        );
     }
 
     public UrlResponseShortUrlDto createShortUrl(UrlRequestDto urlRequestDto) {

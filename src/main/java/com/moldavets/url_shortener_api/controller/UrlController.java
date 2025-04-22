@@ -1,7 +1,9 @@
 package com.moldavets.url_shortener_api.controller;
 
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
+import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import com.moldavets.url_shortener_api.service.Impl.UrlApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +26,17 @@ public class UrlController {
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
+    @GetMapping("api/v1/urls/info/{shortUrl}")
+    public ResponseEntity<UrlResponseInfoDto> retrieveInfoOfShortUrl(@PathVariable("shortUrl") String shortUrl) {
+        return new ResponseEntity<>(urlApplicationService.getInfoByShortUrl(shortUrl), HttpStatus.OK);
+    }
+
     @PostMapping("/api/v1/urls")
     public ResponseEntity<UrlResponseShortUrlDto> createShortUrl(@Valid @RequestBody UrlRequestDto urlRequestDto) {
         return new ResponseEntity<>(urlApplicationService.createShortUrl(urlRequestDto),HttpStatus.CREATED);
     }
 
+    //TODO DELETE BEFORE PRODUCTION
     @DeleteMapping("/api/v1/urls/{shortUrl}")
     public ResponseEntity<Void> deleteShortUrl(@PathVariable("shortUrl") String shortUrl) {
         urlApplicationService.deleteUrl(shortUrl);
