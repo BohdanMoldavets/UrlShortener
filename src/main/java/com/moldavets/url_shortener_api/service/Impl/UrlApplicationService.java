@@ -1,7 +1,6 @@
 package com.moldavets.url_shortener_api.service.Impl;
 
 import com.moldavets.url_shortener_api.exception.LinkExpiredException;
-import com.moldavets.url_shortener_api.mapper.UrlMapper;
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
@@ -77,14 +76,6 @@ public class UrlApplicationService {
 
         cacheService.save(longUrl, shortUrl);
         return responseShortUrlDto;
-    }
-
-    public void deleteUrl(String shortUrl) {
-        Url storedUrl = urlService.getByShortUrl(shortUrl);
-        if(storedUrl.getLinkStatus() == LinkStatus.ACTIVE) {
-            cacheService.deleteByShortUrl(shortUrl);
-            urlService.updateUrlStatusById(LinkStatus.DELETED, storedUrl.getId());
-        }
     }
 
 
