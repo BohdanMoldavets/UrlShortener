@@ -44,11 +44,4 @@ public class UrlController {
         log.info("Short url - [{}], created for long url - [{}]", createdShortUrl.getShortUrl(), urlRequestDto.getLongUrl());
         return new ResponseEntity<>(createdShortUrl,HttpStatus.CREATED);
     }
-
-    //TODO DELETE BEFORE PRODUCTION
-    @DeleteMapping("/api/v1/urls/{shortUrl}")
-    public ResponseEntity<Void> deleteShortUrl(@PathVariable("shortUrl") String shortUrl) {
-        urlApplicationService.deleteUrl(shortUrl);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

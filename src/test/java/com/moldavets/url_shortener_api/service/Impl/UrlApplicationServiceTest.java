@@ -11,10 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.test.context.TestPropertySource;
 
 import java.net.URI;
 import java.time.Instant;
@@ -28,6 +24,7 @@ class UrlApplicationServiceTest {
 
     private UrlServiceImpl urlService;
     private CacheServiceImpl cacheService;
+    private ShortUrlGenerator shortUrlGenerator;
     private UrlApplicationService urlApplicationService;
 
     private static String shortUrl;
@@ -44,7 +41,8 @@ class UrlApplicationServiceTest {
     void setUp() {
         urlService = mock(UrlServiceImpl.class);
         cacheService = mock(CacheServiceImpl.class);
-        urlApplicationService = new UrlApplicationService(urlService, cacheService);
+        shortUrlGenerator = mock(ShortUrlGenerator.class);
+        urlApplicationService = new UrlApplicationService(urlService, cacheService, shortUrlGenerator);
         urlApplicationService.applicationHostname = "hostname";
     }
 
@@ -135,16 +133,46 @@ class UrlApplicationServiceTest {
 
     @Test
     void createShortUrl_shouldReturnShortUrlAlsoSaveToDatabaseAndCache_whenInputContainsValidLongUrl() {
+        when(shortUrlGenerator.generate()).thenReturn(shortUrl);
+        when(urlService.getByShortUrl(shortUrl))
+                .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
+
         when(urlService.save(anyString(), anyString()))
                 .thenReturn(new Url(longUrl, shortUrl, Instant.now().plus(10, ChronoUnit.MINUTES)));
-        when(urlService.getByShortUrl(anyString()))
-                .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
         when(cacheService.save(anyString(), anyString())).thenReturn(shortUrl);
 
         String expected = String.format("http://%s/%s", urlApplicationService.applicationHostname, shortUrl);
         UrlResponseShortUrlDto actual = urlApplicationService.createShortUrl(new UrlRequestDto(longUrl));
 
         assertEquals(expected, actual.getShortUrl());
+        verify(urlService, Mockito.times(1)).save(anyString(), anyString());
+        verify(cacheService, Mockito.times(1)).save(anyString(), anyString());
+    }
+
+    @Test
+    void createShortUrl_shouldRetryWhenShortUrlAlreadyExistsAfterSaveToDatabaseAndCache_whenInputContainsValidLongUrl() {
+         when(shortUrlGenerator.generate())
+            .thenReturn("shortUrl")
+            .thenReturn("shortUrl1");
+
+        when(urlService.getByShortUrl("shortUrl"))
+                .thenReturn(new Url("someOtherUrl", "shortUrl", Instant.now().plus(10, ChronoUnit.MINUTES)));
+
+        when(urlService.getByShortUrl("shortUrl1"))
+                .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
+
+        when(urlService.save(longUrl, "shortUrl1"))
+                .thenReturn(new Url(longUrl, "shortUrl1", Instant.now().plus(10, ChronoUnit.MINUTES)));
+
+        when(cacheService.save(longUrl, "shortUrl1"))
+                .thenReturn("shortUrl1");
+
+        String expected = String.format("http://%s/%s", urlApplicationService.applicationHostname, "shortUrl1");
+        UrlResponseShortUrlDto actual = urlApplicationService.createShortUrl(new UrlRequestDto(longUrl));
+
+        assertEquals(expected, actual.getShortUrl());
+
+        verify(shortUrlGenerator, Mockito.times(2)).generate();
         verify(urlService, Mockito.times(1)).save(anyString(), anyString());
         verify(cacheService, Mockito.times(1)).save(anyString(), anyString());
     }

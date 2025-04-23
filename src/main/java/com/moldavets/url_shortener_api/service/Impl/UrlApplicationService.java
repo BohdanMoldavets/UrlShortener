@@ -25,10 +25,10 @@ public class UrlApplicationService {
     @Value("${application.hostname}")
     String applicationHostname;
 
-    public UrlApplicationService(UrlServiceImpl urlService, CacheServiceImpl cacheService) {
+    public UrlApplicationService(UrlServiceImpl urlService, CacheServiceImpl cacheService, ShortUrlGenerator shortUrlGenerator) {
         this.urlService = urlService;
         this.cacheService = cacheService;
-        this.shortUrlGenerator = new ShortUrlGenerator();
+        this.shortUrlGenerator = shortUrlGenerator;
     }
 
     public URI getLongUrl(String shortUrl) {
