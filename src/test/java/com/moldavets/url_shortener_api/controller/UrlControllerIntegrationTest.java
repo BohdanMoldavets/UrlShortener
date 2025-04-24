@@ -1,35 +1,26 @@
 package com.moldavets.url_shortener_api.controller;
 
-import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
-import com.moldavets.url_shortener_api.repository.UrlRepository;
 import com.redis.testcontainers.RedisContainer;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-
-@Disabled
 @Testcontainers
 @SpringBootTest(properties = "spring.profiles.active=test")
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
 class UrlControllerIntegrationTest {
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    UrlRepository urlRepository;
 
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15");
@@ -37,6 +28,12 @@ class UrlControllerIntegrationTest {
     @Container
     static RedisContainer redis = new RedisContainer(DockerImageName.parse("redis:6.2.6"))
             .withExposedPorts(6379);
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @DynamicPropertySource
     static void setUpProperties(DynamicPropertyRegistry registry) {
@@ -47,10 +44,39 @@ class UrlControllerIntegrationTest {
         registry.add("spring.data.redis.port", () -> redis.getMappedPort(6379).toString());
     }
 
-    @Test
-    public void test () throws Exception {
-        urlRepository.save(new Url("123","321", Instant.now().plus(10, ChronoUnit.MINUTES)));
-        System.out.println(urlRepository.findAll());
+    @ParameterizedTest
+    @CsvSource({
+            "http://www.example.com, PnGyot",
+            "http://www.example.pl, fgwOrk",
+            "http://www.example.de, koZjFA",
+            "http://www.example.ua, oRZGxo",
+    })
+    void redirectLongUrl_shouldReturnLongUrl_whenInputContainsStoredShortUrlInDb(String longUrl, String shortUrl) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
+                .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "PnGyo2",
+            "fgwOrX",
+            "koZjFk",
+    })
+    void redirectLongUrl_shouldReturnNotFoundErrorInfoInResponse_whenInputContainsNotExistShortUrlInDb(String shortUrl) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "URMLhx",
+    })
+    void redirectLongUrl_shouldReturnGoneErrorInfoInResponse_whenInputContainsExpiredShortUrlInDb(String shortUrl) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isGone())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The short link has expired"));
     }
 
 }
