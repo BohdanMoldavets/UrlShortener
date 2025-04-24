@@ -1,22 +1,23 @@
 package com.moldavets.url_shortener_api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.service.Impl.UrlApplicationService;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.net.URI;
 import java.time.Instant;
@@ -24,97 +25,121 @@ import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(controllers = UrlController.class)
 class UrlControllerTest {
 
-    @InjectMocks
-    private UrlController controller;
-
-    @Mock
+    @MockitoBean
     private UrlApplicationService urlApplicationService;
 
+    @MockitoBean
+    private JpaMetamodelMappingContext jpaMetamodelMappingContext;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    private String shortUrl = "test";
+    private String longUrl = "http://example.com";
+
     @Test
-    void redirectLongUrl_shouldReturnResponseEntityWithLongUrl_whenUrlStoredInDatabase() {
-        URI storedLongUrl = URI.create("http://example.com/");
+    void redirectLongUrl_shouldRedirectUserToLongUrl_whenShortUrlStoredInDb () throws Exception {
+        when(urlApplicationService.getLongUrl(shortUrl)).thenReturn(URI.create(longUrl));
+        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
+                .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
 
-        when(urlApplicationService.getLongUrl("test"))
-                .thenReturn(storedLongUrl);
-
-        ResponseEntity<Void> actual = controller.redirectLongUrl("test");
-        URI headerLocation = actual.getHeaders().getLocation();
-
-        assertNotNull(headerLocation);
-        assertEquals(storedLongUrl, headerLocation);
-        assertEquals(HttpStatus.MOVED_PERMANENTLY, actual.getStatusCode());
         verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
     }
 
     @Test
-    void redirectShortUrl_shouldThrowException_whenLongUrlDoesNotExist() {
-        when(urlApplicationService.getLongUrl("test"))
-                .thenThrow(new EntityNotFoundException("Link not found"));
+    void redirectLongUrl_shouldReturnNotFoundInfoInResponse_whenShortUrlDoesNotExist () throws Exception {
+        when(urlApplicationService.getLongUrl(shortUrl))
+                .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-                () -> controller.redirectLongUrl("test"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
 
-        assertEquals("Link not found", exception.getMessage());
         verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
     }
 
     @Test
-    void retrieveInfoOfShortUrl_shouldReturnResponseEntityWithUrlInfo_whenUrlStoredInDatabase() {
-        UrlResponseInfoDto urlInfo = new UrlResponseInfoDto(
-                "http://example.com/",
-                "test",
+    void redirectLongUrl_shouldReturnGoneInfoInResponse_whenShortUrlIsExpired () throws Exception {
+        when(urlApplicationService.getLongUrl(shortUrl))
+                .thenThrow(new LinkExpiredException("The short link has expired"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isGone())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The short link has expired"));
+
+        verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
+    }
+
+    @Test
+    void retrieveInfoOfShortUrl_shouldReturnInfoOfShortUrl_whenShortUrlStoredInDb () throws Exception {
+        UrlResponseInfoDto responseInfoDto = new UrlResponseInfoDto(
+                longUrl,
+                shortUrl,
                 Instant.now().plus(10, ChronoUnit.MINUTES),
                 LinkStatus.ACTIVE,
                 1L
         );
 
-        when(urlApplicationService.getInfoByShortUrl("test"))
-                .thenReturn(urlInfo);
+        when(urlApplicationService.getInfoByShortUrl(shortUrl))
+                .thenReturn(responseInfoDto);
 
-        ResponseEntity<UrlResponseInfoDto> actual = controller.retrieveInfoOfShortUrl("test");
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/urls/info/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.long_url").value(responseInfoDto.getLongUrl()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.short_url").value(responseInfoDto.getShortUrl()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.expires_date").value(responseInfoDto.getExpiresDate().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.link_status").value(responseInfoDto.getLinkStatus().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.total_clicks").value(responseInfoDto.getTotalClicks()));
 
-        assertEquals(urlInfo.getShortUrl(), actual.getBody().getShortUrl());
-        assertEquals(urlInfo.getLongUrl(), actual.getBody().getLongUrl());
-        assertEquals(urlInfo.getExpiresDate(), actual.getBody().getExpiresDate());
-        assertEquals(urlInfo.getLinkStatus(), actual.getBody().getLinkStatus());
-        assertEquals(urlInfo.getTotalClicks(), actual.getBody().getTotalClicks());
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-        verify(urlApplicationService, Mockito.times(1)).getInfoByShortUrl("test");
+        verify(urlApplicationService, Mockito.times(1)).getInfoByShortUrl(anyString());
     }
 
     @Test
-    void retrieveInfoOfShortUrl_shouldThrowException_whenUrlDoesNotExist() {
-        when(urlApplicationService.getInfoByShortUrl("test"))
-                .thenThrow(new EntityNotFoundException("Link not found"));
+    void retrieveInfoOfShortUrl_shouldReturnNotFoundInfoInResponse_whenShortUrlDoesNotExist() throws Exception {
+        when(urlApplicationService.getInfoByShortUrl(shortUrl))
+                .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-                () -> controller.retrieveInfoOfShortUrl("test"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/urls/info/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
 
-        assertEquals("Link not found", exception.getMessage());
-        verify(urlApplicationService, Mockito.times(1)).getInfoByShortUrl("test");
+        verify(urlApplicationService, Mockito.times(1)).getInfoByShortUrl(anyString());
     }
 
     @Test
-    void createShortUrl_shouldReturnShortUrl_whenInputContainsValidLongUrl() {
-        UrlRequestDto inputDto = new UrlRequestDto("http://example.com/");
-        UrlResponseShortUrlDto createdShortUrl = new UrlResponseShortUrlDto("test");
+    void createShortUrl_shouldReturnShortUrl_whenInputContainsValidLongUrl () throws Exception {
+        UrlRequestDto urlRequestDto = new UrlRequestDto(longUrl);
+        UrlResponseShortUrlDto urlResponseShortUrlDto = new UrlResponseShortUrlDto(shortUrl);
 
-        when(urlApplicationService.createShortUrl(inputDto))
-                .thenReturn(createdShortUrl);
+        when(urlApplicationService.createShortUrl(urlRequestDto))
+                .thenReturn(urlResponseShortUrlDto);
 
-        ResponseEntity<UrlResponseShortUrlDto> actual = controller.createShortUrl(inputDto);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/urls")
+                        .content(mapper.writeValueAsString(urlRequestDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.short_url").value(urlResponseShortUrlDto.getShortUrl()));
 
-        assertEquals(createdShortUrl.getShortUrl(), actual.getBody().getShortUrl());
-        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-        verify(urlApplicationService, Mockito.times(1)).createShortUrl(inputDto);
+        verify(urlApplicationService, Mockito.times(1)).createShortUrl(urlRequestDto);
     }
 
+    @Test
+    void createShortUrl_shouldReturnBadRequestInfoInResponse_whenInputContainsNotValidLongUrl () throws Exception {
+        UrlRequestDto urlRequestDto = new UrlRequestDto("test");
 
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/urls")
+                        .content(mapper.writeValueAsString(urlRequestDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Invalid link"));
+    }
 }

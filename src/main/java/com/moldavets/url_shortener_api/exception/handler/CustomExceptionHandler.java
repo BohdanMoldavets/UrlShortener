@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-    private static final String VALIDATION_POSSIBLE_ERRORS = "Check if the domain is correct. " +
-            "Check if the site is online. " +
-            "Check the address bars and punctuation. " +
-            "The URL may be being used for spam. " +
-            "The URL may have been blocked. " +
-            "The URL may have been reported. " +
-            "The URL was recently shortened. " +
-            "The URL is not allowed. " +
-            "You shortened many URLs in a short time.";
+//    private static final String VALIDATION_POSSIBLE_ERRORS = "Check if the domain is correct. " +
+//            "Check if the site is online. " +
+//            "Check the address bars and punctuation. " +
+//            "The URL may be being used for spam. " +
+//            "The URL may have been blocked. " +
+//            "The URL may have been reported. " +
+//            "The URL was recently shortened. " +
+//            "The URL is not allowed. " +
+//            "You shortened many URLs in a short time.";
 
 
     @ExceptionHandler(Exception.class)
@@ -53,7 +53,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDetailsModel> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         log.warn(ex.getMessage(), ex);
-        return new ResponseEntity<>(createExceptionDetailsModel(VALIDATION_POSSIBLE_ERRORS, request), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(createExceptionDetailsModel("Invalid link", request), HttpStatus.BAD_REQUEST);
     }
 
     private ExceptionDetailsModel createExceptionDetailsModel(String message, WebRequest request) {
