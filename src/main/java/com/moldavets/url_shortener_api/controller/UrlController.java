@@ -1,18 +1,22 @@
 package com.moldavets.url_shortener_api.controller;
 
-import com.moldavets.url_shortener_api.model.dto.UrlRequestDto;
-import com.moldavets.url_shortener_api.model.dto.UrlResponseShortUrlDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.service.Impl.UrlApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 
+
+@Slf4j
 @RestController
-@RequestMapping("/api/v1/urls")
 @RequiredArgsConstructor
 public class UrlController {
 
@@ -20,13 +24,24 @@ public class UrlController {
 
     @GetMapping("/{shortUrl}")
     public ResponseEntity<Void> redirectLongUrl(@PathVariable("shortUrl") String shortUrl) {
+        URI longUrl = urlApplicationService.getLongUrl(shortUrl);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(urlApplicationService.getLongUrl(shortUrl));
+        headers.setLocation(longUrl);
+        log.info("Redirecting to - [{}]. Short url is - [{}]", longUrl, shortUrl);
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
-    @PostMapping
+    @GetMapping("api/v1/urls/info/{shortUrl}")
+    public ResponseEntity<UrlResponseInfoDto> retrieveInfoOfShortUrl(@PathVariable("shortUrl") String shortUrl) {
+        UrlResponseInfoDto infoByShortUrl = urlApplicationService.getInfoByShortUrl(shortUrl);
+        log.info("Retrieving info about short url - [{}]", shortUrl);
+        return new ResponseEntity<>(infoByShortUrl, HttpStatus.OK);
+    }
+
+    @PostMapping("/api/v1/urls")
     public ResponseEntity<UrlResponseShortUrlDto> createShortUrl(@Valid @RequestBody UrlRequestDto urlRequestDto) {
-        return new ResponseEntity<>(urlApplicationService.createShortUrl(urlRequestDto),HttpStatus.CREATED);
+        UrlResponseShortUrlDto createdShortUrl = urlApplicationService.createShortUrl(urlRequestDto);
+        log.info("Short url - [{}], created for long url - [{}]", createdShortUrl.getShortUrl(), urlRequestDto.getLongUrl());
+        return new ResponseEntity<>(createdShortUrl,HttpStatus.CREATED);
     }
 }

@@ -1,7 +1,10 @@
 package com.moldavets.url_shortener_api.service.Impl;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component
 public class ShortUrlGenerator {
     public static Random rand = new Random();
     private static final String allowedString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -10,7 +13,7 @@ public class ShortUrlGenerator {
 
     public String generate() {
         StringBuilder shortUrl = new StringBuilder();
-        for(int i = 0 ; i < 5; i++) {
+        for(int i = 0 ; i < 6; i++) {
             shortUrl.append(allowedCharacters[rand.nextInt(0,lengthOfAllowedCharactersArray)]);
         }
         return shortUrl.toString();

@@ -1,4 +1,4 @@
-package com.moldavets.url_shortener_api.model.dto;
+package com.moldavets.url_shortener_api.model.dto.url;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
