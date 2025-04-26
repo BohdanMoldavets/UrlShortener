@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         properties = "spring.profiles.active=test",
         webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UrlServiceImplIntegrationTest {
+class UrlServiceImplIntegrationTest {
 
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15");

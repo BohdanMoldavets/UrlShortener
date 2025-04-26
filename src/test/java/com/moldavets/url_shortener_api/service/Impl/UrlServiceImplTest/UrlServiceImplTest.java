@@ -58,17 +58,33 @@ class UrlServiceImplTest {
     }
 
     @Test
-    void save_shouldThrowException_whenInputContainsNull() {
+    void save_shouldThrowException_whenInputLongUrlIsNull() {
         assertThrows(NullPointerException.class,
-                () -> urlServiceImpl.save(null, null));
+                () -> urlServiceImpl.save(null, shortUrl));
 
         verify(urlRepository, never()).save(any(Url.class));
     }
 
     @Test
-    void save_shouldThrowException_whenInputContainsStringOnlyWithSpaces() {
+    void save_shouldThrowException_whenInputShortUrlIsNull() {
         assertThrows(NullPointerException.class,
-                () -> urlServiceImpl.save("  ", "  "));
+                () -> urlServiceImpl.save(longUrl, null));
+
+        verify(urlRepository, never()).save(any(Url.class));
+    }
+
+    @Test
+    void save_shouldThrowException_whenInputLongUrlStringOnlyWithSpaces() {
+        assertThrows(NullPointerException.class,
+                () -> urlServiceImpl.save("  ", shortUrl));
+
+        verify(urlRepository, never()).save(any(Url.class));
+    }
+
+    @Test
+    void save_shouldThrowException_whenInputShortUrlStringOnlyWithSpaces() {
+        assertThrows(NullPointerException.class,
+                () -> urlServiceImpl.save(longUrl, "  "));
 
         verify(urlRepository, never()).save(any(Url.class));
     }

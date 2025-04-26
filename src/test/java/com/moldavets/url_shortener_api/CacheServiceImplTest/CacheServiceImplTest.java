@@ -79,17 +79,35 @@ class CacheServiceImplTest {
     }
 
     @Test
-    void save_shouldThrowException_whenInputContainsNull() {
+    void save_shouldThrowException_whenInputLongUrlIsNull() {
         assertThrows(NullPointerException.class,
-                () -> cacheServiceImpl.save(null, null));
+                () -> cacheServiceImpl.save(null, shortUrl));
 
         verify(valueOperations, never()).set(anyString(), anyString(), anyInt(), any(TimeUnit.class));
     }
 
     @Test
-    void save_shouldThrowException_whenInputContainsStringWithOnlySpaces() {
+    void save_shouldThrowException_whenInputShortUrlIsNull() {
         assertThrows(NullPointerException.class,
-                () -> cacheServiceImpl.save("  ", "  "));
+                () -> cacheServiceImpl.save(longUrl, null));
+
+        verify(valueOperations, never()).set(anyString(), anyString(), anyInt(), any(TimeUnit.class));
+    }
+
+
+
+    @Test
+    void save_shouldThrowException_whenInputContainsLongUrlStringWithOnlySpaces() {
+        assertThrows(NullPointerException.class,
+                () -> cacheServiceImpl.save("  ", shortUrl));
+
+        verify(valueOperations, never()).set(anyString(), anyString(), anyInt(), any(TimeUnit.class));
+    }
+
+    @Test
+    void save_shouldThrowException_whenInputContainsShortUrlStringWithOnlySpaces() {
+        assertThrows(NullPointerException.class,
+                () -> cacheServiceImpl.save(longUrl, "  "));
 
         verify(valueOperations, never()).set(anyString(), anyString(), anyInt(), any(TimeUnit.class));
     }
