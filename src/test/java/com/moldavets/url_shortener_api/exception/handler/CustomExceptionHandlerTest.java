@@ -88,4 +88,16 @@ class CustomExceptionHandlerTest {
         verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
     }
 
+    @Test
+    void handleAllExceptions_() throws Exception {
+        when(urlApplicationService.getLongUrl(shortUrl))
+                .thenThrow(new NullPointerException("Input data cannot be null"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Input data cannot be null"));
+
+        verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
+    }
+
 }

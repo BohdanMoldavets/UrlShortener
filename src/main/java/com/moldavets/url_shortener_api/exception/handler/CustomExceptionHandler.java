@@ -27,6 +27,12 @@ public class CustomExceptionHandler {
         ), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ExceptionDetailsModel> handleNullPointerException(NullPointerException ex, WebRequest request) {
+        log.warn(ex.getMessage(), ex);
+        return new ResponseEntity<>(createExceptionDetailsModel(ex.getMessage(), request), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(LinkExpiredException.class)
     public ResponseEntity<ExceptionDetailsModel> handleLinkExpiredException(LinkExpiredException ex, WebRequest request) {
         log.warn(ex.getMessage(), ex);
