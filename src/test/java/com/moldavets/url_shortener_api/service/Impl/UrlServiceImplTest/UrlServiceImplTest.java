@@ -1,8 +1,9 @@
-package com.moldavets.url_shortener_api.service.Impl;
+package com.moldavets.url_shortener_api.service.Impl.UrlServiceImplTest;
 
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.Url;
 import com.moldavets.url_shortener_api.repository.UrlRepository;
+import com.moldavets.url_shortener_api.service.Impl.UrlServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
