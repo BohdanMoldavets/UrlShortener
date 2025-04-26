@@ -17,17 +17,6 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-//    private static final String VALIDATION_POSSIBLE_ERRORS = "Check if the domain is correct. " +
-//            "Check if the site is online. " +
-//            "Check the address bars and punctuation. " +
-//            "The URL may be being used for spam. " +
-//            "The URL may have been blocked. " +
-//            "The URL may have been reported. " +
-//            "The URL was recently shortened. " +
-//            "The URL is not allowed. " +
-//            "You shortened many URLs in a short time.";
-
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDetailsModel> handleAllExceptions(Exception ex, WebRequest request) {
         log.error(ex.getMessage(), ex);

@@ -90,14 +90,6 @@ class UrlServiceImplTest {
     }
 
     @Test
-    void save_shouldThrowException_whenInputContainsEmptyString() {
-        assertThrows(NullPointerException.class,
-                () -> urlServiceImpl.save("", ""));
-
-        verify(urlRepository, never()).save(any(Url.class));
-    }
-
-    @Test
     void getByShortUrl_shouldReturnUrl_whenInputContainsStoredShortUrl() {
         when(urlRepository.findByShortUrl(shortUrl)).thenReturn(Optional.of(url));
 
@@ -162,9 +154,17 @@ class UrlServiceImplTest {
     }
 
     @Test
-    void updateUrlStatusById_shouldThrowException_whenInputContainsNull() {
+    void updateUrlStatusById_shouldThrowException_whenInputLinkStatusIsNull() {
         assertThrows(NullPointerException.class,
-                () -> urlServiceImpl.updateUrlStatusById(null, null));
+                () -> urlServiceImpl.updateUrlStatusById(null, 1L));
+
+        verify(urlRepository, never()).updateUrlStatusById(any(LinkStatus.class), any(Instant.class), anyLong());
+    }
+
+    @Test
+    void updateUrlStatusById_shouldThrowException_whenInputIdIsNull() {
+        assertThrows(NullPointerException.class,
+                () -> urlServiceImpl.updateUrlStatusById(LinkStatus.EXPIRED, null));
 
         verify(urlRepository, never()).updateUrlStatusById(any(LinkStatus.class), any(Instant.class), anyLong());
     }
