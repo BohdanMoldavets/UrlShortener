@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    image: api_image
+    container_name: url-shortener-api-container
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis-server
+      - postgres
+    environment:
+      APPLICATION_HOSTNAME: "localhost:8080" # PASTE HERE THE DOMAIN LIKE "surl.com" or other
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/url-shortener-database
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATA_REDIS_HOST: redis-server
+      SPRING_DATA_REDIS_PORT: 6379
+    networks:
+      - url-shortener-network
+
+  postgres:
+    image: postgres:15
+    restart: always
+    container_name: url-shortener-postgres-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=url-shortener-database
+    ports:
+      - "5431:5432"
+    networks:
+      - url-shortener-network
+
+  redis-server:
+    container_name: url-shortener-redis-container
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - url-shortener-network
+
+
+networks:
+  url-shortener-network:
