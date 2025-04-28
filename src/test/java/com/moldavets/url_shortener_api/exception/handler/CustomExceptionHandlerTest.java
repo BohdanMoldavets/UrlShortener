@@ -38,12 +38,13 @@ class CustomExceptionHandlerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    private final String API_URL = "/api/v1/urls";
     private final String shortUrl = "test";
     private final UrlRequestDto urlRequestDto = new UrlRequestDto("not valid link");
 
     @Test
     void handleMethodArgumentNotValidException_shouldHandleMethodArgumentNotValidException() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/urls")
+        mockMvc.perform(MockMvcRequestBuilders.post(API_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(urlRequestDto)))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -57,7 +58,7 @@ class CustomExceptionHandlerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
 
@@ -69,7 +70,7 @@ class CustomExceptionHandlerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new LinkExpiredException("The short link has expired"));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isGone())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The short link has expired"));
 
@@ -81,7 +82,7 @@ class CustomExceptionHandlerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new RedisConnectionException("Redis connection error"));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("An unexpected error occurred. Please try again later"));
 
@@ -93,7 +94,7 @@ class CustomExceptionHandlerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new NullPointerException("Input data cannot be null"));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Input data cannot be null"));
 

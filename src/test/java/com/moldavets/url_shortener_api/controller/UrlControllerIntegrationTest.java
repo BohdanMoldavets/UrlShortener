@@ -38,6 +38,8 @@ class UrlControllerIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    private final String API_URL = "/api/v1/urls/";
+
     @DynamicPropertySource
     static void setUpProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
@@ -55,7 +57,7 @@ class UrlControllerIntegrationTest {
             "http://www.example.ua, oRZGxo",
     })
     void redirectLongUrl_shouldReturnLongUrl_whenInputContainsStoredShortUrlInDb(String longUrl, String shortUrl) throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
                 .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
     }
@@ -67,7 +69,7 @@ class UrlControllerIntegrationTest {
             "koZjFk",
     })
     void redirectLongUrl_shouldReturnNotFoundErrorInfoInResponse_whenInputContainsNotExistShortUrlInDb(String shortUrl) throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
     }
@@ -77,7 +79,7 @@ class UrlControllerIntegrationTest {
             "URMLhx",
     })
     void redirectLongUrl_shouldReturnGoneErrorInfoInResponse_whenInputContainsExpiredShortUrlInDb(String shortUrl) throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"+ shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isGone())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The short link has expired"));
     }
@@ -94,7 +96,7 @@ class UrlControllerIntegrationTest {
                                                                                                             String shortUrl,
                                                                                                             String linkStatus,
                                                                                                             Long totalClicks) throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/urls/info/"+ shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL+ "info/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.long_url").value(longUrl))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.short_url").value(shortUrl))
