@@ -2,6 +2,7 @@ package com.moldavets.url_shortener_api.exception.handler;
 
 import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.exception.model.ExceptionDetailsModel;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 
+@Hidden
 @Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler {
