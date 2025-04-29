@@ -18,6 +18,9 @@ public class CacheServiceImpl implements CacheService, Saveable<String> {
 
     @Override
     public String getByShortUrl(String shortUrl) {
+        if(shortUrl == null || shortUrl.trim().isEmpty()) {
+            throw new NullPointerException("Input data cannot be null");
+        }
         String storedLongUrl = redisTemplate.opsForValue().get(shortUrl);
         log.info("Retrieved long url - [{}] by short url - [{}] from redis", storedLongUrl, shortUrl);
         return storedLongUrl;
@@ -25,6 +28,9 @@ public class CacheServiceImpl implements CacheService, Saveable<String> {
 
     @Override
     public String save(String longUrl, String shortUrl) {
+        if(shortUrl == null || longUrl == null || shortUrl.trim().isEmpty() || longUrl.trim().isEmpty()) {
+            throw new NullPointerException("Input data cannot be null");
+        }
         redisTemplate.opsForValue().set(shortUrl, longUrl, 1440, TimeUnit.MINUTES);
         log.info("Saved in redis: [{}:{}]", shortUrl, longUrl);
         return shortUrl;
@@ -32,6 +38,9 @@ public class CacheServiceImpl implements CacheService, Saveable<String> {
 
     @Override
     public void deleteByShortUrl(String shortUrl) {
+        if(shortUrl == null || shortUrl.trim().isEmpty()) {
+            throw new NullPointerException("Input data cannot be null");
+        }
         redisTemplate.delete(shortUrl);
         log.info("Deleted from redis: [{}]", shortUrl);
     }

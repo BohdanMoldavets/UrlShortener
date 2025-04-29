@@ -42,13 +42,14 @@ class UrlControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+    private final String API_URL = "/api/v1/urls";
     private String shortUrl = "test";
     private String longUrl = "http://example.com";
 
     @Test
     void redirectLongUrl_shouldRedirectUserToLongUrl_whenShortUrlStoredInDb () throws Exception {
         when(urlApplicationService.getLongUrl(shortUrl)).thenReturn(URI.create(longUrl));
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
                 .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
 
@@ -60,7 +61,7 @@ class UrlControllerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
 
@@ -72,7 +73,7 @@ class UrlControllerTest {
         when(urlApplicationService.getLongUrl(shortUrl))
                 .thenThrow(new LinkExpiredException("The short link has expired"));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isGone())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The short link has expired"));
 
@@ -92,7 +93,7 @@ class UrlControllerTest {
         when(urlApplicationService.getInfoByShortUrl(shortUrl))
                 .thenReturn(responseInfoDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/urls/info/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get( API_URL + "/info/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.long_url").value(responseInfoDto.getLongUrl()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.short_url").value(responseInfoDto.getShortUrl()))
@@ -108,7 +109,7 @@ class UrlControllerTest {
         when(urlApplicationService.getInfoByShortUrl(shortUrl))
                 .thenThrow(new EntityNotFoundException(String.format("Entity with url - [%s] does not exist", shortUrl)));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/urls/info/" + shortUrl))
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/info/" + shortUrl))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Link not found"));
 
@@ -123,7 +124,7 @@ class UrlControllerTest {
         when(urlApplicationService.createShortUrl(urlRequestDto))
                 .thenReturn(urlResponseShortUrlDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/urls")
+        mockMvc.perform(MockMvcRequestBuilders.post(API_URL)
                         .content(mapper.writeValueAsString(urlRequestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -136,7 +137,7 @@ class UrlControllerTest {
     void createShortUrl_shouldReturnBadRequestInfoInResponse_whenInputContainsNotValidLongUrl () throws Exception {
         UrlRequestDto urlRequestDto = new UrlRequestDto("test");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/urls")
+        mockMvc.perform(MockMvcRequestBuilders.post(API_URL)
                         .content(mapper.writeValueAsString(urlRequestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())

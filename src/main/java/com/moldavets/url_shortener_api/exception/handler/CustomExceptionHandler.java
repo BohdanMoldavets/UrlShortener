@@ -2,6 +2,7 @@ package com.moldavets.url_shortener_api.exception.handler;
 
 import com.moldavets.url_shortener_api.exception.LinkExpiredException;
 import com.moldavets.url_shortener_api.exception.model.ExceptionDetailsModel;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,20 +14,10 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 
+@Hidden
 @Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler {
-
-//    private static final String VALIDATION_POSSIBLE_ERRORS = "Check if the domain is correct. " +
-//            "Check if the site is online. " +
-//            "Check the address bars and punctuation. " +
-//            "The URL may be being used for spam. " +
-//            "The URL may have been blocked. " +
-//            "The URL may have been reported. " +
-//            "The URL was recently shortened. " +
-//            "The URL is not allowed. " +
-//            "You shortened many URLs in a short time.";
-
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDetailsModel> handleAllExceptions(Exception ex, WebRequest request) {
@@ -36,6 +27,12 @@ public class CustomExceptionHandler {
                 "An unexpected error occurred. Please try again later",
                 null
         ), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ExceptionDetailsModel> handleNullPointerException(NullPointerException ex, WebRequest request) {
+        log.warn(ex.getMessage(), ex);
+        return new ResponseEntity<>(createExceptionDetailsModel(ex.getMessage(), request), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LinkExpiredException.class)
