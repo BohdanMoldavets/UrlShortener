@@ -2,7 +2,7 @@ version: '3.8'
 services:
   api:
     build: .
-    image: api_image
+    image: url-shortener-api_image
     container_name: url-shortener-api-container
     restart: always
     ports:
