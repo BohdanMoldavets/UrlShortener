@@ -141,7 +141,7 @@ class UrlApplicationServiceTest {
                 .thenReturn(new Url(longUrl, shortUrl, Instant.now().plus(10, ChronoUnit.MINUTES)));
         when(cacheService.save(anyString(), anyString())).thenReturn(shortUrl);
 
-        String expected = String.format("http://%s/%s", urlApplicationService.applicationHostname, shortUrl);
+        String expected = String.format("http://%s/api/v1/urls/%s", urlApplicationService.applicationHostname, shortUrl);
         UrlResponseShortUrlDto actual = urlApplicationService.createShortUrl(new UrlRequestDto(longUrl));
 
         assertEquals(expected, actual.getShortUrl());
@@ -167,7 +167,7 @@ class UrlApplicationServiceTest {
         when(cacheService.save(longUrl, "shortUrl1"))
                 .thenReturn("shortUrl1");
 
-        String expected = String.format("http://%s/%s", urlApplicationService.applicationHostname, "shortUrl1");
+        String expected = String.format("http://%s/api/v1/urls/%s", urlApplicationService.applicationHostname, "shortUrl1");
         UrlResponseShortUrlDto actual = urlApplicationService.createShortUrl(new UrlRequestDto(longUrl));
 
         assertEquals(expected, actual.getShortUrl());

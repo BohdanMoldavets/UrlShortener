@@ -72,7 +72,7 @@ public class UrlApplicationService {
         UrlResponseShortUrlDto responseShortUrlDto =
                 new UrlResponseShortUrlDto(storedUrl.getShortUrl());
 
-        responseShortUrlDto.setShortUrl(String.format("http://%s/%s", applicationHostname, responseShortUrlDto.getShortUrl()));
+        responseShortUrlDto.setShortUrl(String.format("http://%s/api/v1/urls/%s", applicationHostname, responseShortUrlDto.getShortUrl()));
 
         cacheService.save(longUrl, shortUrl);
         return responseShortUrlDto;

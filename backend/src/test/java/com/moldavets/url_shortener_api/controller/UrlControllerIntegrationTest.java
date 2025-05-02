@@ -133,7 +133,7 @@ class UrlControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(resultMvc ->
-                        Assertions.assertEquals(34, resultMvc.getResponse().getContentAsString().length()));
+                        Assertions.assertEquals(46, resultMvc.getResponse().getContentAsString().length()));
     }
 
 
