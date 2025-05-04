@@ -1,9 +1,9 @@
-const About = () => {
-    return (
-        <div>
-            <h1>About us</h1>
-        </div>
-    )
-}
+import { Header } from './Header';
 
-export { About }
+export const About = () => {
+    return (
+        <>
+            <Header />
+        </>
+    );
+};

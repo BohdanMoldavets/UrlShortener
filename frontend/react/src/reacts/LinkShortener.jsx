@@ -9,11 +9,13 @@ const LinkShortener = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/urls', {
+            const response = await axios.post('/api/v1/urls', {
                 long_url: url
             });
 
-            setShortUrl(response.data.short_url);
+            const shortPath = response.data.short_url.split('/').pop();
+            console.log(shortPath);
+            setShortUrl(`http://localhost:5173/${shortPath}`);
         } catch (error) {
             console.error('Ошибка при сокращении ссылки:', error);
         }

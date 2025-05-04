@@ -1,9 +1,9 @@
-const Contact = () => {
-    return (
-        <div>
-            <h1>Contact</h1>
-        </div>
-    )
-}
+import { Header } from './Header';
 
-export { Contact }
+export const Contact = () => {
+    return (
+        <>
+            <Header />
+        </>
+    );
+};
