@@ -1,23 +1,19 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import { Home } from './Home';
+import { Routes, Route } from 'react-router-dom';
+import { RedirectPage } from './RedirectPage';
+import { Shorter } from './Shorter';
 import { About } from './About';
 import { Contact } from './Contact';
 
+
 function App() {
   return (
-    <>
-      <header>
-        <Link to="/">Home</Link>
-        <Link to="/contact">Blog</Link>
-        <Link to="/about">About</Link>
-      </header>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Contact />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path='/' element={<Shorter />} />
+      <Route path='/about' element={<About />} />
+      <Route path='/contact' element={<Contact />} />
+      <Route path="/:shortId" element={<RedirectPage />} />
+    </Routes>
   );
 }
 
-export default App
+export default App;
