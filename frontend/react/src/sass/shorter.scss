@@ -1,0 +1,45 @@
+@use './base/variables.scss' as *;
+
+.header {
+    padding: 6px 16px;
+    display: flex;
+    justify-content: space-between;
+
+    &__logo {
+        display: flex;
+        width: 50%;
+    }
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        color: $light;
+        width: 50%;
+        gap: 20px;
+    }
+
+    &__page {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__page-list {
+        text-decoration: none;
+        color: $light;
+    }
+
+    &__contact {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__mail {
+        color: $light-text;
+    }
+
+    &__line {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+}

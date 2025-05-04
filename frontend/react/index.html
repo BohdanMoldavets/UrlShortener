@@ -3,15 +3,35 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="/frontend/react/src/logo/logo.png" />
+  <link rel="icon" href="/src/logo/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UrlShortener</title>
 </head>
 
 <body>
-  <div id="root"></div>
+  <header class="header">
+    <div class="header__logo">
+      <img src="/src/logo/logo.png" alt="logo">
+    </div>
+    <div class="header__wrapper">
+      <div class="header__page">
+        <a href="#" class="header__page-list">Shorten</a>
+        <a href="#" class="header__page-list">About</a>
+        <a href="#" class="header__page-list">Contacts</a>
+      </div>
+      <div class="header__contact">
+        <span class="header__mail">supportsomelnk@gmail.com</span>
+        <a href="#"><img src="/src/img/copy.svg" alt="copy"></a>
+      </div>
+    </div>
+
+  </header>
+  <div class="header__line"></div>
+
+  <!-- <div id="root"></div> -->
   <script type="module" src="/src/reacts/main.jsx"></script>
-  <script src="/src/js/script.js"></script>
+  <script type="module" src="/src/js/script.js"></script>
+
 </body>
 
 </html>
