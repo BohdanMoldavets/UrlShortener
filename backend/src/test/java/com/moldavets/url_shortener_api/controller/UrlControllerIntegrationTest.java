@@ -58,8 +58,8 @@ class UrlControllerIntegrationTest {
     })
     void redirectLongUrl_shouldReturnLongUrl_whenInputContainsStoredShortUrlInDb(String longUrl, String shortUrl) throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(API_URL + shortUrl))
-                .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
-                .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.long_url").value(longUrl));
     }
 
     @ParameterizedTest
