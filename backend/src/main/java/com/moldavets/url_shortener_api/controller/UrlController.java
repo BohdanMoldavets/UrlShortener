@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +31,11 @@ public class UrlController {
 
     private final UrlApplicationService urlApplicationService;
 
-    @Operation(summary = "Redirect to original URL")
+    @Operation(summary = "Retrieve original URL")
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "301",
-                    description = "Successfully redirected to original URL",
+                    responseCode = "200",
+                    description = "Successfully retrieved original URL",
                     content = @Content(schema = @Schema(implementation = UrlResponseLongUrlDto.class), mediaType = "application/json")
             ),
             @ApiResponse(
@@ -51,12 +50,10 @@ public class UrlController {
             )
     })
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<Void> redirectLongUrl(@PathVariable("shortUrl") String shortUrl) {
+    public ResponseEntity<UrlResponseLongUrlDto> redirectLongUrl(@PathVariable("shortUrl") String shortUrl) {
         URI longUrl = urlApplicationService.getLongUrl(shortUrl);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(longUrl);
-        log.info("Redirecting to - [{}]. Short url is - [{}]", longUrl, shortUrl);
-        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+        log.info("Retrieved original URL - [{}]. Short url is - [{}]", longUrl, shortUrl);
+        return new ResponseEntity<>(new UrlResponseLongUrlDto(longUrl), HttpStatus.OK);
     }
 
     @Operation(summary = "Retrieve info about short URL")

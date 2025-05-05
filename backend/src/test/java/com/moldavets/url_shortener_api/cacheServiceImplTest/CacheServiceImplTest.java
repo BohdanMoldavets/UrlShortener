@@ -1,4 +1,4 @@
-package com.moldavets.url_shortener_api.CacheServiceImplTest;
+package com.moldavets.url_shortener_api.cacheServiceImplTest;
 
 import com.moldavets.url_shortener_api.service.Impl.CacheServiceImpl;
 import org.junit.jupiter.api.Test;

@@ -2,6 +2,7 @@ package com.moldavets.url_shortener_api.controller;
 
 import com.moldavets.url_shortener_api.model.dto.url.UrlRequestDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseInfoDto;
+import com.moldavets.url_shortener_api.model.dto.url.UrlResponseLongUrlDto;
 import com.moldavets.url_shortener_api.model.dto.url.UrlResponseShortUrlDto;
 import com.moldavets.url_shortener_api.model.entity.Impl.url.LinkStatus;
 import com.moldavets.url_shortener_api.service.Impl.UrlApplicationService;
@@ -41,12 +42,9 @@ class UrlControllerUnitTest {
         when(urlApplicationService.getLongUrl("test"))
                 .thenReturn(storedLongUrl);
 
-        ResponseEntity<Void> actual = controller.redirectLongUrl("test");
-        URI headerLocation = actual.getHeaders().getLocation();
+        ResponseEntity<UrlResponseLongUrlDto> actual = controller.redirectLongUrl("test");
 
-        assertNotNull(headerLocation);
-        assertEquals(storedLongUrl, headerLocation);
-        assertEquals(HttpStatus.MOVED_PERMANENTLY, actual.getStatusCode());
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
         verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
     }
 

@@ -50,9 +50,8 @@ class UrlControllerTest {
     void redirectLongUrl_shouldRedirectUserToLongUrl_whenShortUrlStoredInDb () throws Exception {
         when(urlApplicationService.getLongUrl(shortUrl)).thenReturn(URI.create(longUrl));
         mockMvc.perform(MockMvcRequestBuilders.get(API_URL + "/" + shortUrl))
-                .andExpect(MockMvcResultMatchers.status().isMovedPermanently())
-                .andExpect(MockMvcResultMatchers.header().string("Location", longUrl));
-
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.long_url").value(longUrl));
         verify(urlApplicationService, Mockito.times(1)).getLongUrl(anyString());
     }
 
