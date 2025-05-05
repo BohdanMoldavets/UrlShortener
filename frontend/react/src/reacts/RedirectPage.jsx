@@ -1,33 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { api } from './api';
 
 export const RedirectPage = () => {
     const { shortId } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [longUrl, setLongUrl] = useState('');
 
     useEffect(() => {
         const fetchAndRedirect = async () => {
             try {
-                const response = await axios.get(`/api/v1/urls/${shortId}`);
-                let longUrl = response.data?.long_url;
+                const response = await api.get(`/v1/urls/${shortId}`);
+                let url = response.data?.long_url;
 
-                if (!longUrl) {
-                    setError("Не удалось найти длинную ссылку.");
+                if (!url) {
+                    setError("Link not found.");
                     return;
                 }
 
-                // Добавляем http, если нужно
-                if (!/^https?:\/\//i.test(longUrl)) {
-                    longUrl = "http://" + longUrl;
+                setLongUrl(url);
+
+                if (!/^https?:\/\//i.test(url)) {
+                    url = "http://" + url;
                 }
 
-                window.location.href = longUrl;
-
+                window.location.href = url;
             } catch (err) {
-                setError("Ошибка при получении ссылки.");
-                console.error("Ошибка при получении ссылки:", err);
+                console.error("Error getting link:", err);
+                setError("Error getting link.");
             } finally {
                 setLoading(false);
             }
@@ -36,9 +37,8 @@ export const RedirectPage = () => {
         fetchAndRedirect();
     }, [shortId]);
 
-    if (loading) {
-        return <p>Перенаправление...</p>;
-    }
+    if (loading) return <p>Redirecting...</p>;
+    if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-    return <p>{error || 'Перенаправление завершено'}</p>;
+    return <p>If you have not been redirected, <a href={longUrl}>click here</a>.</p>;
 };

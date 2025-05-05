@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { api } from './api';
 
 const LinkShortener = () => {
     const [url, setUrl] = useState('');
@@ -9,7 +9,7 @@ const LinkShortener = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/v1/urls', {
+            const response = await api.post('/v1/urls', {
                 long_url: url
             });
 
@@ -17,7 +17,7 @@ const LinkShortener = () => {
             console.log(shortPath);
             setShortUrl(`http://localhost:5173/${shortPath}`);
         } catch (error) {
-            console.error('Ошибка при сокращении ссылки:', error);
+            console.error('Error while shortening link:', error);
         }
     };
 
@@ -28,15 +28,15 @@ const LinkShortener = () => {
                     type="url"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Вставьте ссылку"
+                    placeholder="Insert link"
                     required
                 />
-                <button type="submit">Сократить</button>
+                <button type="submit">Reduce</button>
             </form>
 
             {shortUrl && (
                 <div>
-                    <p>Сокращенная ссылка:</p>
+                    <p>Shortened link:</p>
                     <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
                 </div>
             )}
