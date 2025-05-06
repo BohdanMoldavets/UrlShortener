@@ -8,6 +8,7 @@ export const Shorter = () => {
             <div>
                 <LinkShortener />
             </div>
+
         </>
     );
 };

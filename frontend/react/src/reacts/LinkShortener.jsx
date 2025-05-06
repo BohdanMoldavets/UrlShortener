@@ -30,8 +30,9 @@ const LinkShortener = () => {
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Insert link"
                     required
+                    className='form__input'
                 />
-                <button type="submit">Reduce</button>
+                <button type="submit" className='form__btn'>Reduce</button>
             </form>
 
             {shortUrl && (
