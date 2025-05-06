@@ -12,6 +12,7 @@ export const RedirectPage = () => {
         const fetchAndRedirect = async () => {
             try {
                 const response = await api.get(`/v1/urls/${shortId}`);
+                console.log(response.data);
                 let url = response.data?.long_url;
 
                 if (!url) {
@@ -25,6 +26,7 @@ export const RedirectPage = () => {
                     url = "http://" + url;
                 }
 
+                console.log('Redirecting to:', url);
                 window.location.href = url;
             } catch (err) {
                 console.error("Error getting link:", err);
@@ -37,8 +39,7 @@ export const RedirectPage = () => {
         fetchAndRedirect();
     }, [shortId]);
 
+
     if (loading) return <p>Redirecting...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
-
-    return <p>If you have not been redirected, <a href={longUrl}>click here</a>.</p>;
 };
