@@ -54,6 +54,7 @@ const LinkShortener = () => {
                     <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
                 </div>
             )}
+
         </div>
     );
 };

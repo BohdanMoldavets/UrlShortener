@@ -1,4 +1,5 @@
 import { Header } from './Header';
+import { Footer } from './Footer';
 import LinkShortener from './LinkShortener';
 
 export const Shorter = () => {
@@ -8,7 +9,7 @@ export const Shorter = () => {
             <div>
                 <LinkShortener />
             </div>
-
+            <Footer />
         </>
     );
 };

@@ -15,7 +15,7 @@ export const Header = () => {
                     </div>
                     <div className="header__contact">
                         <span className="header__mail">supportsomelnk@gmail.com</span>
-                        <a href="#"><img src="/src/img/copy.svg" alt="copy" /></a>
+                        <span className='icon-clone header__icon'></span>
                     </div>
                 </div>
             </header>
