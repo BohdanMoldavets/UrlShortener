@@ -39,6 +39,10 @@
         color: $light-text;
     }
 
+    &__icon {
+        color: $light-footer;
+    }
+
     &__line {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
