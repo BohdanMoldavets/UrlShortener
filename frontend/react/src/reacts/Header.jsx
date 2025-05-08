@@ -5,13 +5,12 @@ export const Header = () => {
         <>
             <header className="header">
                 <div className="header__logo">
-                    <img src="/src/logo/logo.png" alt="logo" />
+                    <img src="/src/logo/logoDark.png" alt="logo" />
                 </div>
                 <div className="header__wrapper">
                     <div className="header__page">
                         <Link to="/" className="header__page-list">Shorten</Link>
                         <Link to="/about" className="header__page-list">About</Link>
-                        <Link to="/contact" className="header__page-list">Contacts</Link>
                     </div>
                     <div className="header__contact">
                         <span className="header__mail">supportsomelnk@gmail.com</span>

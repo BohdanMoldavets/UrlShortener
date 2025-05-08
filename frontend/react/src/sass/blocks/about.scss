@@ -1,0 +1,105 @@
+@use '/src/sass/base/variables.scss' as *;
+
+.about {
+    padding: 24px 16px 16px 16px;
+
+    &__title {
+        font-weight: 400;
+        font-size: 100px;
+        line-height: 100%;
+        letter-spacing: -0.03em;
+        color: $light;
+    }
+
+    &__info {
+        margin-top: 58px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__info-text {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        h3 {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 143%;
+            letter-spacing: -0.03em;
+            color: $light-text;
+        }
+
+        p {
+            max-width: 340px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 143%;
+            letter-spacing: -0.03em;
+            color: $light;
+        }
+    }
+
+    &__info-photo {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+
+        h3 {
+            margin-top: 16px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 143%;
+            letter-spacing: -0.03em;
+            color: $light-text;
+        }
+
+        p {
+            margin-top: 4px;
+            max-width: 340px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 143%;
+            letter-spacing: -0.03em;
+            color: $light;
+        }
+    }
+
+    &__info-card-1 {
+        grid-column-start: 1;
+        grid-row-start: 1;
+    }
+
+    &__info-card-2 {
+        grid-column-start: 2;
+        grid-row-start: 2;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+
+        &-text {
+            padding-bottom: 16px;
+        }
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    &__info-card-3 {
+        grid-column-start: 3;
+        grid-row-start: 1;
+    }
+
+    &__info-card-4 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        grid-column-start: 4;
+        grid-row-start: 1;
+    }
+
+
+}
