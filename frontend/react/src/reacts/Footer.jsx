@@ -24,7 +24,7 @@ export const Footer = () => {
                 </div>
                 <div className="footer__copyright">
                     <div className='footer__logo'>
-                        <img src="/src/logo/logoFooter.png" alt="logo" />
+                        <img src="/src/logo/logoFooterDark.png" alt="logo" />
                     </div>
                     <span className='icon-copyright footer__copyright'></span>
                     <div className='footer__text'>
