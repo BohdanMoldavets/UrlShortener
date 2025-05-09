@@ -5,7 +5,7 @@ import { AboutPage } from './AboutPage';
 export const About = () => {
     return (
         <>
-            <Header />
+            <Header isAboutPage={true} aboutContactText="Terms & Conditions" />
             <AboutPage />
             <Footer />
         </>

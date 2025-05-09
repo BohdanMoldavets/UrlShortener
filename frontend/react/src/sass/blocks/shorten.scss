@@ -1,7 +1,7 @@
 @use '/src/sass/base/variables.scss' as *;
 
 .shorten {
-
+    padding: 24px 16px 16px 16px;
 
     &__form {
         display: flex;
@@ -93,7 +93,6 @@
 
     &__info {
         margin-top: 140px;
-        padding: 0 16px 30px 0;
         display: flex;
         justify-content: space-between;
         align-items: end;
@@ -132,5 +131,68 @@
 
     &__map {
         color: $light-footer;
+    }
+
+    &__work {
+        display: flex;
+    }
+}
+
+body.light {
+    .shorten {
+
+        &__title {
+            color: $dark;
+        }
+
+        &__input {
+            color: $dark;
+            background-color: $light;
+            border: 1px solid $dark-footer;
+
+            &::placeholder {
+                color: $light;
+            }
+
+            &::-webkit-input-placeholder {
+                color: $dark;
+            }
+
+            &::-moz-placeholder {
+                color: $dark;
+            }
+
+            &:-ms-input-placeholder {
+                color: $dark;
+            }
+
+            &:-moz-placeholder {
+                color: $dark;
+            }
+        }
+
+        &__btn {
+            background: $dark;
+            color: $light;
+        }
+
+        &__title-h2 {
+            color: $dark-text;
+        }
+
+        &__info {
+            ul {
+                color: $dark;
+            }
+
+            p {
+                color: $dark-text;
+            }
+        }
+
+        &__location,
+        &__map {
+            color: $dark-footer;
+        }
     }
 }

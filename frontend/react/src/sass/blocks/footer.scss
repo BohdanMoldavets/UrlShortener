@@ -95,3 +95,41 @@
         color: $light-footer;
     }
 }
+
+body.light {
+    background-color: $light;
+
+    .footer {
+        &__language-switcher {
+            background-color: #EDEDED;
+        }
+
+        &__language-option-EN,
+        &__language-option-PL {
+            color: $dark-footer;
+
+            &.active {
+                color: $light;
+            }
+        }
+
+
+        &__language-slider {
+            background-color: $dark;
+        }
+
+        &__line {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        &__sun {
+            color: $dark;
+        }
+
+        &__moon,
+        &__copyright,
+        &__text {
+            color: $dark-footer;
+        }
+    }
+}
