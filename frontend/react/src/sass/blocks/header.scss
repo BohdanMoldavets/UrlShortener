@@ -47,3 +47,24 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 }
+
+body.light {
+    .header {
+        &__line {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        &__wrapper,
+        &__page-list {
+            color: $dark;
+        }
+
+        &__mail {
+            color: $dark-text;
+        }
+
+        &__icon {
+            color: $dark-footer;
+        }
+    }
+}
