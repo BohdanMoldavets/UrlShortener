@@ -12,7 +12,7 @@ services:
       - postgres
       - redis
     environment:
-      APPLICATION_HOSTNAME: "localhost:8080" # PASTE HERE THE DOMAIN LIKE "surl.com" or other
+      APPLICATION_HOSTNAME: "urlShortener-frontend-container:8080"
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/url-shortener-database
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
@@ -40,5 +40,7 @@ services:
     container_name: urlShortener-frontend-container
     ports:
       - "5173:5173"
+    environment:
+      VITE_API_URL: "http://urlShortener-backend-container:8080"
     depends_on:
       - api
