@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  api:
+    build:        
+      context: ./backend
+      dockerfile: Dockerfile
+    image: urlshortener-backend-image:latest
+    container_name: urlShortener-backend-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      APPLICATION_HOSTNAME: "urlShortener-frontend-container:8080"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/url-shortener-database
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+  postgres:
+    image: postgres:15
+    container_name: urlShortener-postgres-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=url-shortener-database
+    ports:
+      - "5431:5432"
+  redis:
+    image: redis:latest
+    container_name: urlShortener-redis-container
+    ports:
+      - "6379:6379"
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: urlshortener-frontend-image:latest
+    container_name: urlShortener-frontend-container
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL="http://urlShortener-backend-container:8080"
+    depends_on:
+      - api
