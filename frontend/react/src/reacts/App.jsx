@@ -1,8 +1,11 @@
+import './i18n';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { RedirectPage } from './RedirectPage';
 import { Shorter } from './Shorter';
 import { About } from './About';
+
+
 import { ThemeProvider } from './ThemeContext';
 
 function App() {
