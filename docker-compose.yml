@@ -1,47 +1,44 @@
 version: '3.8'
 services:
   api:
-    build: .
-    image: url-shortener-api_image
-    container_name: url-shortener-api-container
-    restart: always
+    build:        
+      context: ./backend
+      dockerfile: Dockerfile
+    image: urlshortener-backend-image:latest
+    container_name: urlShortener-backend-container
     ports:
       - "8080:8080"
     depends_on:
-      - redis-server
       - postgres
+      - redis
     environment:
       APPLICATION_HOSTNAME: "localhost:8080" # PASTE HERE THE DOMAIN LIKE "surl.com" or other
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/url-shortener-database
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
-      SPRING_DATA_REDIS_HOST: redis-server
+      SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
-    networks:
-      - url-shortener-network
-
   postgres:
     image: postgres:15
-    restart: always
-    container_name: url-shortener-postgres-container
+    container_name: urlShortener-postgres-container
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=url-shortener-database
     ports:
       - "5431:5432"
-    networks:
-      - url-shortener-network
-
-  redis-server:
-    container_name: url-shortener-redis-container
+  redis:
     image: redis:latest
-    restart: always
+    container_name: urlShortener-redis-container
     ports:
       - "6379:6379"
-    networks:
-      - url-shortener-network
-
-
-networks:
-  url-shortener-network:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: urlshortener-frontend-image:latest
+    container_name: urlShortener-frontend-container
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
