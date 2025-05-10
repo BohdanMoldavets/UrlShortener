@@ -2,12 +2,12 @@ FROM node:18
 
 WORKDIR /frontend
 
-COPY react/package*.json .
-COPY react/vite.config.js .
+COPY react/package*.json ./
+COPY react/vite.config.js ./
 
 RUN npm install
 
-COPY . .
+COPY react/ ./
 
 EXPOSE 5173
 
