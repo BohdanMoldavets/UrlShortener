@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { api } from './api';
+import { useTranslation } from 'react-i18next';
 import '../sass/blocks/shorten.scss';
 import '../sass/libs/fontello.css';
 
@@ -7,6 +8,7 @@ import '../sass/libs/fontello.css';
 const LinkShortener = () => {
     const [url, setUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
+    const { t } = useTranslation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,21 +38,21 @@ const LinkShortener = () => {
                     required
                     className='shorten__input'
                 />
-                <button type="submit" className='shorten__btn'>Compress</button>
+                <button type="submit" className='shorten__btn'>{t("compress")}</button>
             </form>
-            <h2 className='shorten__title-h2'>Enter your link, shorten it in seconds, and share with anyone. No distractions, no unnecessary steps — just fast and clean results.</h2>
+            <h2 className='shorten__title-h2'>{t("enterText")}</h2>
             <div className="shorten__info">
                 <div className="shorten__location">
                     <span className="icon-map-pin shorten__map"></span>
                     <p>Poznan, Poland</p>
                 </div>
                 <div className="shorten__work">
-                    <p>Instant action, smooth flow</p>
+                    <p>{t("list")}</p>
                     <ul>
-                        <li>No account creation required.</li>
-                        <li>Enter your link and get the short version at once.</li>
-                        <li>All links are processed securely without being stored.  </li>
-                        <li>Minimal interface for fast and distraction free shortening.</li>
+                        <li>{t("itemOne")}</li>
+                        <li>{t("itemTwo")}</li>
+                        <li>{t("itemThree")}</li>
+                        <li>{t("itemFour")}</li>
                     </ul>
                 </div>
             </div>

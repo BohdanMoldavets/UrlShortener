@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import '../sass/blocks/header.scss';
 import { useTheme } from './ThemeContext';
+import { useTranslation } from 'react-i18next';
 
 export const Header = ({ isAboutPage, aboutContactText }) => {
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <>
@@ -15,8 +17,8 @@ export const Header = ({ isAboutPage, aboutContactText }) => {
                 </div>
                 <div className="header__wrapper">
                     <div className="header__page">
-                        <Link to="/" className="header__page-list">Shorten</Link>
-                        <Link to="/about" className={`header__page-list ${isAboutPage ? 'header__page-list--active' : ''}`}>About</Link>
+                        <Link to="/" className="header__page-list">{t("shorten")}</Link>
+                        <Link to="/about" className={`header__page-list ${isAboutPage ? 'header__page-list--active' : ''}`}>{t("about")}</Link>
                     </div>
                     <div className="header__contact">
                         {isAboutPage ? (
