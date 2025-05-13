@@ -7,7 +7,8 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'http://urlShortener-backend-container:8080',
+        // target: 'http://urlShortener-backend-container:8080',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
