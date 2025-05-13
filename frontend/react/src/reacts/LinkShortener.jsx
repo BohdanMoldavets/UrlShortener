@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Trans } from 'react-i18next';
 import { api } from './api';
 import { useTranslation } from 'react-i18next';
 import '../sass/blocks/shorten.scss';
@@ -7,7 +8,7 @@ import '../sass/libs/fontello.css';
 
 const LinkShortener = ({ shortUrl, setShortUrl }) => {
     const [url, setUrl] = useState('');
-    const [copied, setCopied] = useState(false); // <--- Добавлено
+    const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
 
     const handleSubmit = async (e) => {
@@ -28,7 +29,7 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
         navigator.clipboard.writeText(shortUrl)
             .then(() => {
                 setCopied(true);
-                setTimeout(() => setCopied(false), 2000); // скрыть через 2 секунды
+                setTimeout(() => setCopied(false), 2000);
             })
             .catch(err => {
                 console.error('Failed to copy: ', err);
@@ -77,17 +78,21 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
 
             {shortUrl && (
                 <section className='result'>
-                    <a href={shortUrl} target="_blank" rel="noopener noreferrer" className='result__link'>{shortUrl}</a>
+                    <div className="result__wrapper">
+                        <a href={shortUrl} target="_blank" rel="noopener noreferrer" className='result__link' onClick={handleCopy}>{shortUrl}</a>
+                        <span className='icon-clone result__icon' onClick={handleCopy}></span>
+                    </div>
                     <p className='result__text'>
-                        Copy completed. You can now easily distribute<br />
-                        your short link across any platform or<br />
-                        communication channel.
+                        <Trans
+                            i18nKey="result"
+                            components={[<></>, <br />, <br />]}
+                        />
                     </p>
                     <div className="result__btns">
-                        <button type="button" className='result__btn-r' onClick={() => setShortUrl('')}>Reject</button>
-                        <button type="button" className='result__btn-c' onClick={handleCopy}>Catch</button>
+                        <button type="button" className='result__btn-r' onClick={() => setShortUrl('')}>{t("back")}</button>
+                        <button type="button" className='result__btn-c' onClick={handleCopy}>Info</button>
                     </div>
-                    {copied && <div className="copied-popup">Copied!</div>}
+                    {copied && <div className="copied-popup">{t("copy")}</div>}
                 </section>
             )}
         </>
