@@ -1,6 +1,8 @@
 @use './base/basic.scss';
 @use './base/variables.scss' as *;
 
+@use './ui/buttons.scss';
+
 @use './libs/fontello.css';
 
 @use './blocks/header.scss';

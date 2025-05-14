@@ -22,28 +22,28 @@ export const AboutPage = () => {
                         <div className="about__info-card-1">
                             <img src="/src/img/bohdan.jpg" alt="photo-1" />
                             <div className="about__info-card-1-text">
-                                <h3>Front-End Developer</h3>
+                                <h3>Backend Developer</h3>
                                 <p>Bohdan Moldavets</p>
                             </div>
                         </div>
                         <div className="about__info-card-2">
                             <img src="/src/img/anna.png" alt="photo-2" />
                             <div className="about__info-card-2-text">
-                                <h3>Front-End Developer</h3>
-                                <p>Bohdan Moldavets</p>
+                                <h3>UX/UI Designer</h3>
+                                <p>Anna Fenko</p>
                             </div>
                         </div>
                         <div className="about__info-card-3">
                             <img src="/src/img/stas.jpg" alt="photo-3" />
                             <div className="about__info-card-3-text">
-                                <h3>Front-End Developer</h3>
+                                <h3>Frontend Developer</h3>
                                 <p>Stanislav Riabtsev</p>
                             </div>
                         </div>
                         <div className="about__info-card-4">
                             <img src="/src/img/ivan.jpg" alt="photo-4" />
                             <div className="about__info-card-4-text">
-                                <h3>Front-End Developer</h3>
+                                <h3>DevOps Engineer</h3>
                                 <p>Ivan Zamishchak</p>
                             </div>
                         </div>

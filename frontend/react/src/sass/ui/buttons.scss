@@ -1,0 +1,36 @@
+@use '/src/sass/base/variables.scss' as *;
+@use '/src/sass/base/mixin.scss' as *;
+
+.btn-shorten {
+    @include button;
+    width: 137px;
+    height: 56px;
+    background: $light;
+    color: $dark;
+    padding: 12px 24px;
+    border: none;
+
+    &:hover {
+        box-shadow: 1px 1px 10px 10px $light-footer;
+    }
+}
+
+.btn-back {
+    @include button;
+    min-width: 110px;
+    min-height: 60px;
+    background: #ee0007;
+    color: $light;
+    padding: 12px 24px;
+    border: none;
+}
+
+.btn-info {
+    @include button;
+    min-width: 110px;
+    min-height: 60px;
+    background: $light;
+    color: $dark;
+    padding: 12px 24px;
+    border: none;
+}

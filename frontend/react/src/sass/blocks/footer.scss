@@ -85,10 +85,18 @@
 
     &__sun {
         color: $light-footer;
+
+        &:hover {
+            color: #fbf135;
+        }
     }
 
     &__moon {
         color: $light;
+
+        &:hover {
+            color: #9bf8ff;
+        }
     }
 
     &__copyright {
@@ -124,9 +132,20 @@ body.light {
 
         &__sun {
             color: $dark;
+
+            &:hover {
+                color: #ffcc00;
+            }
         }
 
-        &__moon,
+        &__moon {
+            color: $dark-footer;
+
+            &:hover {
+                color: #9bf8ff;
+            }
+        }
+
         &__copyright,
         &__text {
             color: $dark-footer;

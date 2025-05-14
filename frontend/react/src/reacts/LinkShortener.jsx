@@ -9,6 +9,7 @@ import '../sass/libs/fontello.css';
 const LinkShortener = ({ shortUrl, setShortUrl }) => {
     const [url, setUrl] = useState('');
     const [copied, setCopied] = useState(false);
+    const [isResultVisible, setIsResultVisible] = useState(false);
     const { t } = useTranslation();
 
     const handleSubmit = async (e) => {
@@ -20,9 +21,17 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
 
             const shortPath = response.data.short_url.split('/').pop();
             setShortUrl(`http://localhost:5173/${shortPath}`);
+            setIsResultVisible(true);
         } catch (error) {
             console.error('Error while shortening link:', error);
         }
+    };
+
+    const handleBack = () => {
+        setIsResultVisible(false);
+        setTimeout(() => {
+            setShortUrl('');
+        }, 500);
     };
 
     const handleCopy = () => {
@@ -52,7 +61,7 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
                                 required
                                 className='shorten__input'
                             />
-                            <button type="submit" className='shorten__btn'>{t("compress")}</button>
+                            <button type="submit" className='btn-shorten shorten__btn'>{t("compress")}</button>
                         </form>
 
                         <h2 className='shorten__title-h2'>{t("enterText")}</h2>
@@ -77,7 +86,7 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
             </div>
 
             {shortUrl && (
-                <section className='result'>
+                <section className={`result ${isResultVisible ? 'result--visible' : 'result--hide'}`}>
                     <div className="result__wrapper">
                         <a href={shortUrl} target="_blank" rel="noopener noreferrer" className='result__link' onClick={handleCopy}>{shortUrl}</a>
                         <span className='icon-clone result__icon' onClick={handleCopy}></span>
@@ -89,8 +98,8 @@ const LinkShortener = ({ shortUrl, setShortUrl }) => {
                         />
                     </p>
                     <div className="result__btns">
-                        <button type="button" className='result__btn-r' onClick={() => setShortUrl('')}>{t("back")}</button>
-                        <button type="button" className='result__btn-c' onClick={handleCopy}>Info</button>
+                        <button type="button" className='btn-back result__btn-back' onClick={handleBack}>{t("back")}</button>
+                        <button type="button" className='btn-info result__btn-info' onClick={handleCopy}>Info</button>
                     </div>
                     {copied && <div className="copied-popup">{t("copy")}</div>}
                 </section>
