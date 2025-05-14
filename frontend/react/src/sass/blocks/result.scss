@@ -8,7 +8,7 @@
     height: 100vh;
     z-index: 1000;
     backdrop-filter: blur(10px);
-    // -webkit-backdrop-filter: blur(10px); //safari
+    -webkit-backdrop-filter: blur(10px); //safari
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,6 +17,14 @@
     box-sizing: border-box;
     overflow: hidden;
     animation: fadeInZoom 1s ease-out forwards;
+
+    &--visible {
+        animation: fadeInZoom 0.5s ease-out forwards;
+    }
+
+    &--hide {
+        animation: fadeOutZoom 0.5s ease-in forwards;
+    }
 
     @keyframes fadeInZoom {
         0% {
@@ -27,6 +35,18 @@
         100% {
             opacity: 1;
             transform: scale(1);
+        }
+    }
+
+    @keyframes fadeOutZoom {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        100% {
+            opacity: 0;
+            transform: scale(0.95);
         }
     }
 
@@ -70,38 +90,22 @@
         gap: 8px;
     }
 
-    &__btn-r {
-        border-radius: 40px;
-        padding: 12px 24px;
-        width: 102px;
-        height: 56px;
-        background: #ee0007;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 160%;
-        letter-spacing: -0.03em;
-        text-align: center;
-        color: $light;
+    &__btn-back {
         animation: fadeInZoom 1s ease-out forwards;
+
+        &:hover {
+            box-shadow: 1px 1px 10px 10px $light-footer;
+        }
     }
 
-    &__btn-c {
-        border-radius: 40px;
-        padding: 12px 24px;
-        width: 102px;
-        height: 56px;
-        background: $light;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 160%;
-        letter-spacing: -0.03em;
-        text-align: center;
-        color: $dark;
+    &__btn-info {
         animation: fadeInZoom 1s ease-out forwards;
+
+
+        &:hover {
+            box-shadow: 1px 1px 10px 10px $light-footer;
+        }
     }
-
-
-
 }
 
 .copied-popup {
@@ -135,5 +139,32 @@
     100% {
         opacity: 0;
         transform: translateY(-10px);
+    }
+}
+
+body.light {
+    .result {
+        &__link {
+            color: $dark;
+        }
+
+        &__icon {
+            color: $dark;
+        }
+
+        &__btn-info {
+            background-color: $dark;
+            color: $light;
+
+            &:hover {
+                box-shadow: 1px 1px 10px 10px $dark-footer;
+            }
+        }
+
+        &__btn-back {
+            &:hover {
+                box-shadow: 1px 1px 10px 10px $dark-footer;
+            }
+        }
     }
 }

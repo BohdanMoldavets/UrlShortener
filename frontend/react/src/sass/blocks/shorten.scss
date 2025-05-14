@@ -33,7 +33,7 @@
         font-size: 24px;
         letter-spacing: -0.03em;
         text-align: center;
-        color: #ffffff;
+        color: $light;
         background-color: $dark;
         padding: 10px;
         border: 1px solid $light-footer;
@@ -72,19 +72,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 40px;
         margin-top: 50px;
-        padding: 12px 24px;
         margin-bottom: 16px;
-        width: 137px;
-        height: 56px;
-        background: $light;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 160%;
-        letter-spacing: -0.03em;
-        text-align: center;
-        color: $dark;
     }
 
     &__title {
@@ -189,6 +178,10 @@ body.light {
         &__btn {
             background: $dark;
             color: $light;
+
+            &:hover {
+                box-shadow: 1px 1px 10px 10px $dark-footer;
+            }
         }
 
         &__title-h2 {
