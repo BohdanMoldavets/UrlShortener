@@ -1,12 +1,9 @@
-import './i18n';
-import React from 'react';
+import './trans/i18n';
 import { Routes, Route } from 'react-router-dom';
-import { RedirectPage } from './RedirectPage';
-import { Shorter } from './Shorter';
-import { About } from './About';
-
-
-import { ThemeProvider } from './ThemeContext';
+import { RedirectPage } from './shorten/RedirectPage';
+import { Shorter } from './shorten/Shorter';
+import { About } from './about/About';
+import { ThemeProvider } from './theme/ThemeContext';
 
 function App() {
   return (

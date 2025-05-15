@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import '../sass/blocks/header.scss';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../theme/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import '../../sass/blocks/header.scss';
 
 export const Header = ({ isAboutPage, aboutContactText }) => {
     const { theme } = useTheme();
