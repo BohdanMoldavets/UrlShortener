@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Trans } from 'react-i18next';
-import '../sass/blocks/footer.scss';
+import '../../sass/blocks/footer.scss';
 
 export const AboutPage = () => {
     const { t } = useTranslation();
