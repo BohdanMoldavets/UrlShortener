@@ -16,5 +16,11 @@
     "aboutText": "All links are processed securely with no data storage, ensuring that personal and usage information remains completely confidential. Our system is designed to protect your privacy at every stage.",
     "result": "Copy completed. You can now easily distribute<1/>your short link across any platform or<2/>communication channel.",
     "back": "Back",
-    "copy": "Copied!"
+    "copy": "Copied!",
+    "info": "Info about link",
+    "long": "Long URL",
+    "short": "Short URL",
+    "date": "Expires",
+    "status": "Status",
+    "click": "Total Clicks"
 }
