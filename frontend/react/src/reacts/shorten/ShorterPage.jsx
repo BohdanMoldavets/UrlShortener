@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { ShortLinkInfo } from './ShortLinkInfo';
+import { useNavigate } from 'react-router-dom';
 import '../../sass/blocks/shorten.scss';
 import '../../sass/blocks/result.scss';
 import '../../sass/libs/fontello.css';
@@ -16,10 +15,10 @@ export const ShorterPage = ({
     handleCopy,
 }) => {
     const { t } = useTranslation();
-    const [showInfo, setShowInfo] = useState(false);
+    const navigate = useNavigate();
 
     const handleInfoClick = () => {
-        setShowInfo(true);
+        navigate(`/info?url=${encodeURIComponent(shortUrl)}`);
     };
 
     return (
@@ -76,13 +75,8 @@ export const ShorterPage = ({
                         <button type="button" className='btn-info result__btn-info' onClick={handleInfoClick}>Info</button>
                     </div>
                     {copied && <div className="copied-popup">{t("copy")}</div>}
-                    {showInfo && (
-                        <ShortLinkInfo shortUrl={shortUrl} showInfo={showInfo} />
-                    )}
                 </section>
             )}
-
-
         </>
     );
 };
