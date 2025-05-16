@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { ShortLinkInfo } from './ShortLinkInfo';
 import '../../sass/blocks/shorten.scss';
 import '../../sass/blocks/result.scss';
 import '../../sass/libs/fontello.css';
@@ -14,6 +16,11 @@ export const ShorterPage = ({
     handleCopy,
 }) => {
     const { t } = useTranslation();
+    const [showInfo, setShowInfo] = useState(false);
+
+    const handleInfoClick = () => {
+        setShowInfo(true);
+    };
 
     return (
         <>
@@ -66,11 +73,16 @@ export const ShorterPage = ({
                     </p>
                     <div className="result__btns">
                         <button type="button" className='btn-back result__btn-back' onClick={handleBack}>{t("back")}</button>
-                        <button type="button" className='btn-info result__btn-info' onClick={handleCopy}>Info</button>
+                        <button type="button" className='btn-info result__btn-info' onClick={handleInfoClick}>Info</button>
                     </div>
                     {copied && <div className="copied-popup">{t("copy")}</div>}
+                    {showInfo && (
+                        <ShortLinkInfo shortUrl={shortUrl} showInfo={showInfo} />
+                    )}
                 </section>
             )}
+
+
         </>
     );
 };
