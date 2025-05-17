@@ -1,0 +1,31 @@
+@use '/src/sass/base/variables.scss' as *;
+@use '/src/sass/base/mixin.scss' as *;
+
+.title-shorten {
+    @include title;
+    font-size: 120px;
+}
+
+.title-shorten-h2 {
+    @include title;
+    font-size: 20px;
+    line-height: 160%;
+    color: $light-text;
+}
+
+.title-result {
+    @include title;
+    font-size: 100px;
+}
+
+.title-info {
+    @include title;
+    font-size: 120px;
+}
+
+.title-about {
+    @include title;
+    text-align: left;
+    line-height: 100%;
+    font-size: 100px;
+}

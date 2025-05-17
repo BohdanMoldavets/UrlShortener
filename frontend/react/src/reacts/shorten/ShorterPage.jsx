@@ -26,7 +26,7 @@ export const ShorterPage = ({
             <div className='shorten'>
                 {!shortUrl && (
                     <>
-                        <h1 className='shorten__title'>enter:your:link</h1>
+                        <h1 className='title-shorten shorten__title'>enter:your:link</h1>
 
                         <form onSubmit={handleSubmit} className='shorten__form'>
                             <input
@@ -40,16 +40,16 @@ export const ShorterPage = ({
                             <button type="submit" className='btn-shorten shorten__btn'>{t("compress")}</button>
                         </form>
 
-                        <h2 className='shorten__title-h2'>{t("enterText")}</h2>
+                        <h2 className='title-shorten-h2 shorten__title-h2'>{t("enterText")}</h2>
 
                         <div className="shorten__info">
-                            <div className="shorten__location">
+                            <div className="text-location shorten__location">
                                 <span className="icon-map-pin shorten__map"></span>
                                 <p>Poznan, Poland</p>
                             </div>
                             <div className="shorten__work">
-                                <p>{t("list")}</p>
-                                <ul>
+                                <p className='list'>{t("list")}</p>
+                                <ul className='list'>
                                     <li>{t("itemOne")}</li>
                                     <li>{t("itemTwo")}</li>
                                     <li>{t("itemThree")}</li>
@@ -64,7 +64,7 @@ export const ShorterPage = ({
             {shortUrl && (
                 <section className={`result ${isResultVisible ? 'result--visible' : 'result--hide'}`}>
                     <div className="result__wrapper">
-                        <a href={shortUrl} className='result__link' onClick={handleCopy}>{shortUrl}</a>
+                        <a href={shortUrl} className='title-result result__link' onClick={handleCopy}>{shortUrl}</a>
                         <span className='icon-clone result__icon' onClick={handleCopy}></span>
                     </div>
                     <p className='result__text'>
