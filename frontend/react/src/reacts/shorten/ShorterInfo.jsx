@@ -17,7 +17,7 @@ export const ShorterInfo = () => {
         <>
             <Header isAboutPage={true} aboutContactText="Terms & Conditions" />
             <section className='info'>
-                <h2 className='info__title'>{t("info")}</h2>
+                <h2 className='title-info info__title'>{t("info")}</h2>
                 {!shortUrl && <p>No short URL provided.</p>}
                 {loading && <p>Loading info...</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}

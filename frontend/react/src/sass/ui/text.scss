@@ -1,0 +1,18 @@
+@use '/src/sass/base/variables.scss' as *;
+@use '/src/sass/base/mixin.scss' as *;
+
+.list {
+    @include text;
+}
+
+.text-location {
+    @include text;
+}
+
+.text-about {
+    @include text;
+}
+
+.footer-text {
+    @include text;
+}

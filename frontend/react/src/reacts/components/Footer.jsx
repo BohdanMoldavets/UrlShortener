@@ -32,7 +32,7 @@ export const Footer = () => {
                         <img src={`/src/logo/logoFooter${theme === 'light' ? 'Light' : 'Dark'}.png`} alt="logo" />
                     </div>
                     <span className='icon-copyright footer__copyright'></span>
-                    <div className='footer__text'>
+                    <div className='footer-text footer__text'>
                         {t("footer")}
                     </div>
                 </div>

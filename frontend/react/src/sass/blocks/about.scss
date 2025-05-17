@@ -17,10 +17,6 @@
     }
 
     &__title {
-        font-weight: 400;
-        font-size: 100px;
-        line-height: 100%;
-        letter-spacing: -0.03em;
         color: $light;
     }
 
@@ -36,19 +32,11 @@
         gap: 8px;
 
         h3 {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 143%;
-            letter-spacing: -0.03em;
             color: $light-text;
         }
 
         p {
             max-width: 340px;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 143%;
-            letter-spacing: -0.03em;
             color: $light;
         }
     }
@@ -62,20 +50,12 @@
 
         h3 {
             margin-top: 16px;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 143%;
-            letter-spacing: -0.03em;
             color: $light-text;
         }
 
         p {
             margin-top: 4px;
             max-width: 340px;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 143%;
-            letter-spacing: -0.03em;
             color: $light;
         }
     }

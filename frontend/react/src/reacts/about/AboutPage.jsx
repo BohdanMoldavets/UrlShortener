@@ -7,7 +7,7 @@ export const AboutPage = () => {
     return (
         <>
             <section className="about">
-                <h2 className="about__title">
+                <h2 className="title-about about__title">
                     <Trans
                         i18nKey="aboutTitle"
                         components={[<></>, <br />, <br />, <br />, <br />]}
@@ -15,36 +15,36 @@ export const AboutPage = () => {
                 </h2>
                 <div className="about__info">
                     <div className="about__info-text">
-                        <h3>{t("aboutSubTitle")}</h3>
-                        <p>{t("aboutText")}</p>
+                        <h3 className='text-about'>{t("aboutSubTitle")}</h3>
+                        <p className='text-about'>{t("aboutText")}</p>
                     </div>
                     <div className="about__info-photo">
                         <div className="about__info-card-1">
                             <img src="/src/img/bohdan.jpg" alt="photo-1" />
                             <div className="about__info-card-1-text">
-                                <h3>Backend Developer</h3>
-                                <p>Bohdan Moldavets</p>
+                                <h3 className='text-about'>Backend Developer</h3>
+                                <p className='text-about'>Bohdan Moldavets</p>
                             </div>
                         </div>
                         <div className="about__info-card-2">
                             <img src="/src/img/anna.png" alt="photo-2" />
                             <div className="about__info-card-2-text">
-                                <h3>UX/UI Designer</h3>
-                                <p>Anna Fenko</p>
+                                <h3 className='text-about'>UX/UI Designer</h3>
+                                <p className='text-about'>Anna Fenko</p>
                             </div>
                         </div>
                         <div className="about__info-card-3">
                             <img src="/src/img/stas.jpg" alt="photo-3" />
                             <div className="about__info-card-3-text">
-                                <h3>Frontend Developer</h3>
-                                <p>Stanislav Riabtsev</p>
+                                <h3 className='text-about'>Frontend Developer</h3>
+                                <p className='text-about'>Stanislav Riabtsev</p>
                             </div>
                         </div>
                         <div className="about__info-card-4">
                             <img src="/src/img/ivan.jpg" alt="photo-4" />
                             <div className="about__info-card-4-text">
-                                <h3>DevOps Engineer</h3>
-                                <p>Ivan Zamishchak</p>
+                                <h3 className='text-about'>DevOps Engineer</h3>
+                                <p className='text-about'>Ivan Zamishchak</p>
                             </div>
                         </div>
                     </div>
