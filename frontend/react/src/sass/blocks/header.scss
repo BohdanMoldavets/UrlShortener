@@ -68,3 +68,29 @@ body.light {
         }
     }
 }
+
+@media screen and (max-width:1024px) {
+    .header {
+        display: flex;
+        justify-content: start;
+        gap: 200px;
+
+        &__logo {
+            display: flex;
+            width: 40px;
+            height: 40px;
+        }
+
+        &__wrapper {
+            gap: 370px;
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .header {
+        &__wrapper {
+            gap: 300px;
+        }
+    }
+}
