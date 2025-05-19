@@ -79,6 +79,12 @@ body.light {
         justify-content: start;
         gap: 200px;
 
+        &__page {
+            html[lang='pl'] & {
+                min-width: 120px;
+            }
+        }
+
         &__logo {
             display: flex;
             width: 40px;
@@ -87,6 +93,15 @@ body.light {
 
         &__wrapper {
             gap: 370px;
+
+            html[lang='pl'] & {
+                gap: 370px;
+            }
+        }
+
+        &__contact {
+            padding-left: 110px;
+            min-width: 140px;
         }
     }
 }
@@ -97,6 +112,10 @@ body.light {
 
         &__wrapper {
             gap: 300px;
+
+            html[lang='pl'] & {
+                gap: 295px;
+            }
         }
     }
 }

@@ -192,6 +192,16 @@ body.light {
         &__work {
             p {
                 margin-right: 40px;
+
+                html[lang='pl'] & {
+                    margin-right: 0px;
+                }
+            }
+        }
+
+        &__info p {
+            html[lang='pl'] & {
+                margin-right: 0px;
             }
         }
     }
@@ -218,6 +228,10 @@ body.light {
             margin-top: 40px;
             padding: 0 50px;
             max-width: 660px;
+
+            html[lang='pl'] & {
+                padding: 0 40px;
+            }
         }
 
         &__work {

@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../sass/blocks/shorten.scss';
 import '../../sass/blocks/result.scss';
@@ -15,6 +16,9 @@ export const ShorterPage = ({
     handleCopy,
 }) => {
     const { t } = useTranslation();
+    i18n.on('languageChanged', (lng) => {
+        document.documentElement.setAttribute('lang', lng);
+    });
     const navigate = useNavigate();
 
     const handleInfoClick = () => {
@@ -40,7 +44,7 @@ export const ShorterPage = ({
                             <button type="submit" className='btn-shorten shorten__btn'>{t("compress")}</button>
                         </form>
 
-                        <h2 className='title-shorten-h2 shorten__title-h2'>{t("enterText")}</h2>
+                        <h2 className="title-shorten-h2 shorten__title-h2">{t("enterText")}</h2>
 
                         <div className="shorten__info">
                             <div className="text-location shorten__location">

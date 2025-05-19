@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../theme/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { Panel } from './Panel';
+import i18n from 'i18next';
 import '../../sass/blocks/header.scss';
 
 export const Header = ({ isAboutPage, aboutContactText }) => {
     const { theme } = useTheme();
     const { t } = useTranslation();
     const [panelOpen, setPanelOpen] = useState(false);
+    i18n.on('languageChanged', (lng) => {
+        document.documentElement.setAttribute('lang', lng);
+    });
 
     return (
         <>
