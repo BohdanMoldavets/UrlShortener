@@ -1,15 +1,87 @@
 @use '/src/sass/base/variables.scss' as *;
 
-.footer {
+.panel {
+    padding: 16px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(55px);
+    z-index: 999;
+    transition: right 0.3s ease;
     display: flex;
-    align-items: center;
-    padding: 4px 16px;
+    flex-direction: column;
+    box-sizing: border-box;
 
-    &__line {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    animation: fadeInZoom 1s ease-out forwards;
+
+    &--visible {
+        animation: fadeInZoom 0.5s ease-out forwards;
     }
 
-    &__language-switcher {
+    &--hide {
+        animation: fadeOutZoom 0.5s ease-in forwards;
+    }
+
+    @keyframes fadeInZoom {
+        0% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes fadeOutZoom {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        100% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+
+    &.open {
+        right: 0;
+    }
+
+    &__close {
+        align-self: flex-end;
+        font-size: 32px;
+        background: none;
+        border: none;
+        color: $light;
+        cursor: pointer;
+    }
+
+    &__nav a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 26px;
+        font-size: 20px;
+        color: $light;
+        text-decoration: none;
+    }
+
+    &__controls {
+        margin-top: auto;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        gap: 24px;
+    }
+
+    &__language {
         position: relative;
         width: 50px;
         height: 26px;
@@ -24,7 +96,7 @@
     }
 
     &__language-option-EN {
-        padding: 0 0 0 3px;
+        padding: 0 0 0 2px;
         font-weight: bold;
         font-size: 14px;
         color: $light-text;
@@ -37,7 +109,7 @@
     }
 
     &__language-option-PL {
-        padding: 0 5px 0 0;
+        padding: 0 2px 0 0;
         font-weight: bold;
         font-size: 14px;
         color: $light-text;
@@ -60,23 +132,10 @@
         transition: transform 0.3s ease-in-out;
     }
 
-    &__icons {
-        padding: 3px 24px;
-    }
-
-    &__logo {
-        width: 26px;
-        height: 26px;
-    }
-
-    &__text {
-        color: $light-footer;
-    }
-
-    &__copyright {
+    &__theme {
         display: flex;
+        justify-content: center;
         align-items: center;
-        gap: 8px;
     }
 
     &__sun {
@@ -94,17 +153,22 @@
             color: #9bf8ff;
         }
     }
-
-    &__copyright {
-        color: $light-footer;
-    }
 }
 
 body.light {
     background-color: $light;
 
-    .footer {
-        &__language-switcher {
+    .panel {
+
+        &__close {
+            color: $dark;
+        }
+
+        &__nav a {
+            color: $dark;
+        }
+
+        &__language {
             background-color: #EDEDED;
         }
 
@@ -122,10 +186,6 @@ body.light {
             background-color: $dark;
         }
 
-        &__line {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
         &__sun {
             color: $dark;
 
@@ -141,30 +201,5 @@ body.light {
                 color: #9bf8ff;
             }
         }
-
-        &__copyright,
-        &__text {
-            color: $dark-footer;
-        }
     }
-}
-
-@media screen and (max-width: 375px) {
-    .footer {
-        align-self: center;
-        justify-content: center;
-
-        &__language-switcher {
-            display: none;
-        }
-
-        &__icons {
-            display: none;
-        }
-
-        &__logo {
-            display: none;
-        }
-    }
-
 }

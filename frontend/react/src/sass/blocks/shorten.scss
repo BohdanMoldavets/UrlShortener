@@ -86,6 +86,7 @@
 
     &__title-h2 {
         margin-top: 60px;
+        font-size: 20px;
     }
 
     &__info {
@@ -229,6 +230,33 @@ body.light {
             p {
                 margin: 0;
             }
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .shorten {
+        &__title {
+            margin-top: 60px;
+            font-size: 52px;
+        }
+
+        &__input {
+            max-width: 200px;
+            font-size: 14px;
+        }
+
+        &__title-h2 {
+            font-size: 14px;
+            padding: 0;
+        }
+
+        &__info {
+            margin-top: 50px;
+        }
+
+        &__location {
+            display: none;
         }
     }
 }
