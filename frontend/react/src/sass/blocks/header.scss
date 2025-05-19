@@ -46,6 +46,10 @@
     &__line {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    &__btn-mobile {
+        display: none;
+    }
 }
 
 body.light {
@@ -89,8 +93,36 @@ body.light {
 
 @media screen and (max-width:768px) {
     .header {
+        gap: 20px;
+
         &__wrapper {
             gap: 300px;
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .header {
+        align-items: center;
+        justify-content: space-between;
+
+        &__wrapper {
+            display: none;
+        }
+
+        &__btn-mobile {
+            display: block;
+            border: 1px solid $light-footer;
+            border-radius: 20px;
+            padding: 5px 12px 3px 12px;
+            width: 58px;
+            height: 28px;
+            background-color: $dark;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 143%;
+            letter-spacing: -0.03em;
+            color: $light;
         }
     }
 }

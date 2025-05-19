@@ -7,7 +7,6 @@
 
 .title-shorten-h2 {
     @include title;
-    font-size: 20px;
     line-height: 160%;
     color: $light-text;
 }

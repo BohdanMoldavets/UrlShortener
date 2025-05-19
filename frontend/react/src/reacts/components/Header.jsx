@@ -1,11 +1,14 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../theme/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import { Panel } from './Panel';
 import '../../sass/blocks/header.scss';
 
 export const Header = ({ isAboutPage, aboutContactText }) => {
     const { theme } = useTheme();
     const { t } = useTranslation();
+    const [panelOpen, setPanelOpen] = useState(false);
 
     return (
         <>
@@ -31,9 +34,13 @@ export const Header = ({ isAboutPage, aboutContactText }) => {
                         )}
                     </div>
                 </div>
+                <button className="header__btn-mobile" onClick={() => setPanelOpen(true)}>Panel</button>
             </header>
 
             <div className="header__line"></div>
+            {panelOpen && (
+                <Panel isOpen={panelOpen} onClose={() => setPanelOpen(false)} />
+            )}
         </>
     );
 };
