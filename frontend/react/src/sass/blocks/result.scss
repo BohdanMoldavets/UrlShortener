@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     z-index: 1000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); //safari
@@ -62,10 +62,38 @@
     }
 
     &__link {
-        display: flex;
+        display: inline-block;
         justify-content: center;
         color: $light;
         text-decoration: none;
+        overflow: hidden;
+        border-right: 2px solid $light;
+        width: 0;
+        animation:
+            typing 2.5s steps(30, end) forwards,
+            blink-caret 0.75s step-end 3;
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+
+            0%,
+            100% {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: $light;
+            }
+        }
     }
 
     &__text {
@@ -96,7 +124,6 @@
 
     &__btn-info {
         animation: fadeInZoom 1s ease-out forwards;
-
 
         &:hover {
             box-shadow: 1px 1px 10px 10px $light-footer;
@@ -161,6 +188,76 @@ body.light {
             &:hover {
                 box-shadow: 1px 1px 10px 10px $dark-footer;
             }
+        }
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .result {
+
+        &__link {
+            font-size: 65px;
+        }
+
+        &__wrapper {
+            max-width: 935px;
+        }
+
+        &__text {
+            margin-top: 150px;
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .result {
+
+        &__link {
+            font-size: 55px;
+        }
+
+        &__text {
+            margin-top: 110px;
+        }
+
+        &__btns {
+            max-width: 200px;
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .result {
+
+        padding: 16px;
+        justify-content: space-between;
+
+        &__icon {
+            display: none;
+        }
+
+        &__link {
+            margin-top: 150px;
+            font-size: 25px;
+        }
+
+        &__control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        &__text {
+            margin: 0 0 8px 0;
+            text-align: center;
+        }
+
+        &__btns {
+            max-width: 170px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
         }
     }
 }

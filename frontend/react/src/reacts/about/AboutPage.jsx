@@ -46,7 +46,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-3">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/stasPhone.jpg" />
-                                <img src="/src/img/stas.png" alt="photo-2" />
+                                <img src="/src/img/stas.jpg" alt="photo-2" />
                             </picture>
                             <div className="about__info-card-3-text">
                                 <h3 className='text-about'>Frontend Developer</h3>
@@ -56,7 +56,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-4">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/ivanPhone.jpg" />
-                                <img src="/src/img/ivan.png" alt="photo-2" />
+                                <img src="/src/img/ivan.jpg" alt="photo-2" />
                             </picture>
                             <div className="about__info-card-4-text">
                                 <h3 className='text-about'>DevOps Engineer</h3>
