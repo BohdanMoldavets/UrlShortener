@@ -15,9 +15,10 @@
 
 .btn-back {
     @include button;
+    background: #ee0007;
+    font-size: 20px;
     min-width: 110px;
     min-height: 60px;
-    background: #ee0007;
     color: $light;
     padding: 12px 24px;
     border: none;
@@ -25,10 +26,27 @@
 
 .btn-info {
     @include button;
+    background: $light;
+    font-size: 20px;
     min-width: 110px;
     min-height: 60px;
-    background: $light;
     color: $dark;
     padding: 12px 24px;
     border: none;
+}
+
+@media screen and (max-width:768px) {
+    .btn-back {
+        padding: 10px 18px;
+        min-width: 100px;
+        min-height: 50px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .btn-info {
+        padding: 10px 18px;
+        min-width: 100px;
+        min-height: 50px;
+    }
 }

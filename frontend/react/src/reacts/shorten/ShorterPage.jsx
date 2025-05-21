@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../sass/blocks/shorten.scss';
 import '../../sass/blocks/result.scss';
@@ -15,6 +16,9 @@ export const ShorterPage = ({
     handleCopy,
 }) => {
     const { t } = useTranslation();
+    i18n.on('languageChanged', (lng) => {
+        document.documentElement.setAttribute('lang', lng);
+    });
     const navigate = useNavigate();
 
     const handleInfoClick = () => {
@@ -26,7 +30,15 @@ export const ShorterPage = ({
             <div className='shorten'>
                 {!shortUrl && (
                     <>
-                        <h1 className='title-shorten shorten__title'>enter:your:link</h1>
+                        <h1 className='title-shorten shorten__title'>
+                            <span>en</span>
+                            <span>ter</span>
+                            <span>:</span>
+                            <span>yo</span>
+                            <span>ur</span>
+                            <span>:</span>
+                            <span>li</span>
+                            <span>nk</span></h1>
 
                         <form onSubmit={handleSubmit} className='shorten__form'>
                             <input
@@ -40,7 +52,7 @@ export const ShorterPage = ({
                             <button type="submit" className='btn-shorten shorten__btn'>{t("compress")}</button>
                         </form>
 
-                        <h2 className='title-shorten-h2 shorten__title-h2'>{t("enterText")}</h2>
+                        <h2 className="title-shorten-h2 shorten__title-h2">{t("enterText")}</h2>
 
                         <div className="shorten__info">
                             <div className="text-location shorten__location">
@@ -67,12 +79,14 @@ export const ShorterPage = ({
                         <a href={shortUrl} className='title-result result__link' onClick={handleCopy}>{shortUrl}</a>
                         <span className='icon-clone result__icon' onClick={handleCopy}></span>
                     </div>
-                    <p className='result__text'>
-                        <Trans i18nKey="result" components={[<></>, <br />, <br />]} />
-                    </p>
-                    <div className="result__btns">
-                        <button type="button" className='btn-back result__btn-back' onClick={handleBack}>{t("back")}</button>
-                        <button type="button" className='btn-info result__btn-info' onClick={handleInfoClick}>Info</button>
+                    <div className="result__control">
+                        <p className='result__text'>
+                            <Trans i18nKey="result" components={[<></>, <br />, <br />]} />
+                        </p>
+                        <div className="result__btns">
+                            <button type="button" className='btn-back result__btn-back' onClick={handleBack}>{t("back")}</button>
+                            <button type="button" className='btn-info result__btn-info' onClick={handleInfoClick}>Info</button>
+                        </div>
                     </div>
                     {copied && <div className="copied-popup">{t("copy")}</div>}
                 </section>
