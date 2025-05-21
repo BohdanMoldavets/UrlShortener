@@ -27,3 +27,15 @@
     line-height: 100%;
     font-size: 100px;
 }
+
+@media screen and (max-width:768px) {
+    .title-info {
+        font-size: 100px;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .title-info {
+        font-size: 40px;
+    }
+}
