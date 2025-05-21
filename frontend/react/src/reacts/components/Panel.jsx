@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../theme/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -8,13 +9,31 @@ export const Panel = ({ isOpen, onClose }) => {
     const { i18n, t } = useTranslation();
     const currentLang = i18n.language;
 
+    const [isVisible, setIsVisible] = useState(isOpen);
+    const [animationClass, setAnimationClass] = useState(isOpen ? 'open' : '');
+
+    useEffect(() => {
+        if (isOpen) {
+            setIsVisible(true);
+            setAnimationClass('open');
+        } else {
+            setAnimationClass('close');
+            const timeout = setTimeout(() => {
+                setIsVisible(false);
+            }, 500);
+            return () => clearTimeout(timeout);
+        }
+    }, [isOpen]);
+
+    if (!isVisible) return null;
+
     const toggleLanguage = () => {
         const newLang = currentLang === 'en' ? 'pl' : 'en';
         i18n.changeLanguage(newLang);
     };
 
     return (
-        <div className={`panel ${isOpen ? 'open' : ''}`}>
+        <div className={`panel ${animationClass}`}>
             <button className="panel__close" onClick={onClose}>×</button>
             <nav className="panel__nav">
                 <Link to="/" onClick={onClose}>{t("shorten")}</Link>
@@ -31,6 +50,6 @@ export const Panel = ({ isOpen, onClose }) => {
                     <span className={`icon-moon-inv panel__moon ${theme === 'dark' ? 'active' : ''}`} onClick={() => toggleTheme('dark')}></span>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };

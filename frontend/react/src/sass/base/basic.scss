@@ -35,9 +35,13 @@ img {
 html {
     font-family: "Fustat", sans-serif;
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     background-color: $dark;
+    min-height: 100vh;
 }
