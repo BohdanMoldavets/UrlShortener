@@ -142,7 +142,7 @@ body.light {
     }
 }
 
-@media screen and (max-width:375px) {
+@media screen and (max-width:425px) {
     .header {
         align-items: center;
         justify-content: space-between;
@@ -156,14 +156,24 @@ body.light {
             border: 1px solid $light-footer;
             border-radius: 20px;
             padding: 5px 12px 3px 12px;
-            width: 58px;
-            height: 28px;
+            min-width: 62px;
+            min-height: 32px;
             background-color: $dark;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 143%;
             letter-spacing: -0.03em;
             color: $light;
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .header {
+        &__btn-mobile {
+            min-width: 58px;
+            min-height: 28px;
+            font-size: 14px;
         }
     }
 }

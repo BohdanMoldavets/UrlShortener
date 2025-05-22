@@ -3,12 +3,14 @@
 
 .title-shorten {
     @include title;
+    font-size: 120px;
 }
 
 .title-shorten-h2 {
     @include title;
     line-height: 160%;
     color: $light-text;
+    font-size: 20px;
 }
 
 .title-result {
@@ -28,6 +30,16 @@
     font-size: 100px;
 }
 
+@media screen and (max-width:1024px) {
+    .title-result {
+        font-size: 65px;
+    }
+
+    .title-about {
+        font-size: 75px;
+    }
+}
+
 @media screen and (max-width:768px) {
     .title-info {
         font-size: 100px;
@@ -35,6 +47,44 @@
         html[lang='pl'] & {
             font-size: 90px;
         }
+    }
+
+    .title-shorten {
+        font-size: 100px;
+    }
+
+    .title-result {
+        font-size: 55px;
+    }
+
+    .title-about {
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .title-info {
+        font-size: 50px;
+
+        html[lang='pl'] & {
+            font-size: 45px;
+        }
+    }
+
+    .title-shorten {
+        font-size: 55px;
+    }
+
+    .title-shorten-h2 {
+        font-size: 16px;
+    }
+
+    .title-result {
+        font-size: 30px;
+    }
+
+    .title-about {
+        font-size: 40px;
     }
 }
 
@@ -45,5 +95,17 @@
         html[lang='pl'] & {
             font-size: 40px;
         }
+    }
+
+    .title-shorten {
+        font-size: 52px;
+    }
+
+    .title-shorten-h2 {
+        font-size: 14px;
+    }
+
+    .title-result {
+        font-size: 25px;
     }
 }

@@ -26,6 +26,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-1">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/bohdanPhone.jpg" />
+                                <source media="(max-width: 425px)" srcSet="/src/img/bohdanPhone.jpg" />
                                 <img src="/src/img/bohdan.jpg" alt="photo-1" />
                             </picture>
                             <div className="about__info-card-1-text">
@@ -36,6 +37,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-2">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/annaPhone.jpg" />
+                                <source media="(max-width: 425px)" srcSet="/src/img/annaPhone.jpg" />
                                 <img src="/src/img/anna.png" alt="photo-2" />
                             </picture>
                             <div className="about__info-card-2-text">
@@ -46,6 +48,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-3">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/stasPhone.jpg" />
+                                <source media="(max-width: 425px)" srcSet="/src/img/stasPhone.jpg" />
                                 <img src="/src/img/stas.jpg" alt="photo-2" />
                             </picture>
                             <div className="about__info-card-3-text">
@@ -56,6 +59,7 @@ export const AboutPage = () => {
                         <div className="about__info-card-4">
                             <picture>
                                 <source media="(max-width: 375px)" srcSet="/src/img/ivanPhone.jpg" />
+                                <source media="(max-width: 425px)" srcSet="/src/img/ivanPhone.jpg" />
                                 <img src="/src/img/ivan.jpg" alt="photo-2" />
                             </picture>
                             <div className="about__info-card-4-text">

@@ -194,11 +194,6 @@ body.light {
 
 @media screen and (max-width:1024px) {
     .result {
-
-        &__link {
-            font-size: 65px;
-        }
-
         &__wrapper {
             max-width: 935px;
         }
@@ -212,10 +207,6 @@ body.light {
 @media screen and (max-width:768px) {
     .result {
 
-        &__link {
-            font-size: 55px;
-        }
-
         &__text {
             margin-top: 110px;
         }
@@ -226,7 +217,7 @@ body.light {
     }
 }
 
-@media screen and (max-width:375px) {
+@media screen and (max-width:425px) {
     .result {
 
         padding: 16px;
@@ -238,7 +229,6 @@ body.light {
 
         &__link {
             margin-top: 150px;
-            font-size: 25px;
         }
 
         &__control {
