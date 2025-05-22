@@ -3,6 +3,7 @@
 .about {
     padding: 24px 16px 16px 16px;
     animation: fadeInZoom 1s ease-out forwards;
+    flex: 1;
 
     @keyframes fadeInZoom {
         0% {
@@ -116,10 +117,6 @@ body.light {
 
 @media screen and (max-width:1024px) {
     .about {
-        &__title {
-            font-size: 75px;
-        }
-
         &__info-photo {
             max-width: 560px;
         }
@@ -129,10 +126,6 @@ body.light {
 
 @media screen and (max-width:768px) {
     .about {
-        &__title {
-            font-size: 60px;
-        }
-
         &__info-photo {
             display: flex;
             grid-column-gap: 8px;
@@ -173,11 +166,8 @@ body.light {
     }
 }
 
-@media screen and (max-width:375px) {
+@media screen and (max-width:425px) {
     .about {
-        &__title {
-            font-size: 40px;
-        }
 
         &__info {
             display: flex;
@@ -191,20 +181,36 @@ body.light {
         &__info-photo {
             display: flex;
             flex-direction: column;
-            margin-top: 52px;
+            margin-top: 60px;
 
             h3 {
                 margin-top: 16px;
-                font-size: 20px;
+                font-size: 22px;
             }
 
             p {
                 margin-top: 4px;
-                font-size: 20px;
+                font-size: 22px;
             }
 
             img {
                 width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .about {
+        &__info-photo {
+            margin-top: 52px;
+
+            h3 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 20px;
             }
         }
     }

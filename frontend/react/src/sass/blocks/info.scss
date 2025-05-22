@@ -143,18 +143,120 @@ body.light {
     }
 }
 
-@media screen and (max-width:375px) {
+@media screen and (max-width:1024px) {
+    .info {
+        &__title {
+
+            div:nth-child(1) {
+                left: 20px;
+                top: 120px;
+                animation-delay: 0s;
+            }
+
+            div:nth-child(2) {
+                left: 200px;
+                top: 300px;
+                animation-delay: 4s;
+            }
+
+            div:nth-child(3) {
+                left: 500px;
+                top: -10px;
+                animation-delay: 8s;
+            }
+
+            div:nth-child(4) {
+                left: 700px;
+                top: 200px;
+                animation-delay: 6s;
+            }
+
+            div:nth-child(5) {
+                left: 1200px;
+                top: 400px;
+                animation-delay: 2s;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .info {
+        &__title {
+
+            div:nth-child(1) {
+                left: -100px;
+                top: 120px;
+                animation-delay: 0s;
+            }
+
+            div:nth-child(2) {
+                left: 200px;
+                top: 300px;
+                animation-delay: 4s;
+            }
+
+            div:nth-child(3) {
+                left: 500px;
+                top: -10px;
+                animation-delay: 8s;
+            }
+
+            div:nth-child(4) {
+                left: 600px;
+                top: 400px;
+                animation-delay: 8s;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:425px) {
     .info {
         &__list {
+            max-width: 358px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
 
             ul {
-                font-size: 12px;
+                width: 100%;
+                font-size: 14px;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                box-sizing: border-box;
+                min-width: 0;
+            }
+
+            li {
+                display: flex;
+                width: 100%;
+                gap: 4px;
+                align-items: center;
+                box-sizing: border-box;
+                min-width: 0;
+
+                span {
+                    flex-shrink: 0;
+                    white-space: nowrap;
+                }
+
+                a {
+                    display: block;
+                    flex-grow: 1;
+                    width: 0;
+                    min-width: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
 
         &__title {
             div {
-                font-size: 10px;
+                font-size: 6px;
                 width: 100px;
                 height: 50px;
             }
@@ -187,6 +289,51 @@ body.light {
                 left: -60px;
                 top: 280px;
                 animation-delay: 2s;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:375px) {
+    .info {
+        &__list {
+            max-width: 358px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+
+            ul {
+                width: 100%;
+                font-size: 14px;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                box-sizing: border-box;
+                min-width: 0;
+            }
+
+            li {
+                display: flex;
+                width: 100%;
+                gap: 4px;
+                align-items: center;
+                box-sizing: border-box;
+                min-width: 0;
+
+                span {
+                    flex-shrink: 0;
+                    white-space: nowrap;
+                }
+
+                a {
+                    display: block;
+                    flex-grow: 1;
+                    width: 0;
+                    min-width: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
     }

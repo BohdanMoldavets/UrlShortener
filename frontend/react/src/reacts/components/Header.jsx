@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../theme/ThemeContext';
 import { useTranslation } from 'react-i18next';
