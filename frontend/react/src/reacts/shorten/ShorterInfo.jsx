@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { useShortLinkInfo } from './ShortLinkInfo';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import '../../sass/blocks/info.scss';
 
 export const ShorterInfo = () => {
@@ -30,7 +30,7 @@ export const ShorterInfo = () => {
                 {info && (
                     <div className="info__list">
                         <ul>
-                            <li className='info__item'>{t("long")} : <a href={info.long_url} target="_blank" rel="noopener noreferrer">{info.long_url || 'N/A'}</a></li>
+                            <li className='info__item'>{t("long")} : <a href={info.long_url} target="_blank" rel="noopener noreferrer" title={info.long_url}>{info.long_url || 'N/A'}</a></li>
                             <li className='info__item'>{t("short")} : <span>{info.short_url || 'N/A'}</span></li>
                             <li className='info__item'>{t("date")} : <span>{info.expires_date ? new Date(info.expires_date).toLocaleString() : 'N/A'}</span></li>
                             <li className='info__item'>{t("status")} : <span>{info.link_status || 'N/A'}</span></li>

@@ -3,6 +3,7 @@
 .about {
     padding: 24px 16px 16px 16px;
     animation: fadeInZoom 1s ease-out forwards;
+    flex: 1;
 
     @keyframes fadeInZoom {
         0% {

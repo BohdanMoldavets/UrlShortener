@@ -31,11 +31,19 @@
 @media screen and (max-width:768px) {
     .title-info {
         font-size: 100px;
+
+        html[lang='pl'] & {
+            font-size: 90px;
+        }
     }
 }
 
 @media screen and (max-width:375px) {
     .title-info {
         font-size: 40px;
+
+        html[lang='pl'] & {
+            font-size: 40px;
+        }
     }
 }

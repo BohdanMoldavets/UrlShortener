@@ -107,11 +107,15 @@ body.light {
             height: 40px;
         }
 
+        &__icon {
+            display: none;
+        }
+
         &__wrapper {
-            gap: 370px;
+            gap: 300px;
 
             html[lang='pl'] & {
-                gap: 370px;
+                gap: 300px;
             }
         }
 
@@ -127,10 +131,12 @@ body.light {
         gap: 20px;
 
         &__wrapper {
-            gap: 300px;
+            gap: 225px;
+        }
 
-            html[lang='pl'] & {
-                gap: 295px;
+        html[lang='pl'] & {
+            &__wrapper {
+                gap: 220px;
             }
         }
     }
