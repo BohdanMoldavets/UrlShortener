@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./sass/style.scss";
-import "./trans/i18n.js";
+import "./i18n/i18n.js";
 import "./sass/libs/fontello.css";
 
 import App from "./App.jsx";

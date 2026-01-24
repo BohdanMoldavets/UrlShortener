@@ -1,17 +1,17 @@
 import { useTranslation, Trans } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { Header } from "../layout/Header";
-import { Footer } from "../layout/Footer";
-import "../sass/blocks/footer.scss";
+import { Header } from "../../layout/Header";
+import { Footer } from "../../layout/Footer";
+import "../../sass/blocks/footer.scss";
 
-import bohdanImg from "../assets/img/bohdan.jpg";
-import bohdanPhoneImg from "../assets/img/bohdanPhone.jpg";
-import annaImg from "../assets/img/anna.png";
-import annaPhoneImg from "../assets/img/annaPhone.jpg";
-import stasImg from "../assets/img/stas.jpg";
-import stasPhoneImg from "../assets/img/stasPhone.jpg";
-import ivanImg from "../assets/img/ivan.jpg";
-import ivanPhoneImg from "../assets/img/ivanPhone.jpg";
+import bohdanImg from "../../assets/img/bohdan.jpg";
+import bohdanPhoneImg from "../../assets/img/bohdanPhone.jpg";
+import annaImg from "../../assets/img/anna.png";
+import annaPhoneImg from "../../assets/img/annaPhone.jpg";
+import stasImg from "../../assets/img/stas.jpg";
+import stasPhoneImg from "../../assets/img/stasPhone.jpg";
+import ivanImg from "../../assets/img/ivan.jpg";
+import ivanPhoneImg from "../../assets/img/ivanPhone.jpg";
 
 export const AboutPage = () => {
   const { t } = useTranslation();

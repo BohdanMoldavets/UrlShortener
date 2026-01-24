@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
-import { Header } from "../layout/Header";
-import { Footer } from "../layout/Footer";
-import { useShortLinkInfo } from "./ShortLinkInfo";
+import { Header } from "../../layout/Header";
+import { Footer } from "../../layout/Footer";
+import { useShortLinkInfo } from "./useShortLinkInfo";
 import { useTranslation } from "react-i18next";
-import "../sass/blocks/info.scss";
+import "../../sass/blocks/info.scss";
 
 export const ShorterInfo = () => {
   const { t } = useTranslation();
