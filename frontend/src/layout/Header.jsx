@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { Panel } from "./Panel";
 import i18n from "i18next";
-import "../../sass/blocks/header.scss";
+import "../sass/blocks/header.scss";
 
 export const Header = ({ aboutContactText }) => {
   const { theme } = useTheme();

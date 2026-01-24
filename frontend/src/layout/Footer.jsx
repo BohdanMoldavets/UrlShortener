@@ -1,7 +1,7 @@
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
-import "../../sass/blocks/footer.scss";
-import "../../sass/libs/fontello.css";
+import "../sass/blocks/footer.scss";
+import "../sass/libs/fontello.css";
 
 export const Footer = () => {
   const { theme, toggleTheme } = useTheme();
