@@ -1,7 +1,8 @@
 @font-face {
-  font-family: 'fontello';
-  src: url('../../fonts/fontello.woff2') format('woff2'),
-    url('../../fonts/fontello.woff') format('woff');
+  font-family: "fontello";
+  src:
+    url("../../assets/fonts/fontello.woff2") format("woff2"),
+    url("../../assets/") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -25,7 +26,7 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  margin-right: 0.2em;
   text-align: center;
   /* opacity: .8; */
 
@@ -38,7 +39,7 @@
 
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  margin-left: 0.2em;
 
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
@@ -52,27 +53,27 @@
 }
 
 .icon-sun:before {
-  content: '\e800';
+  content: "\e800";
 }
 
 /* '' */
 .icon-moon-inv:before {
-  content: '\e801';
+  content: "\e801";
 }
 
 /* '' */
 .icon-copyright:before {
-  content: '\f1f9';
+  content: "\f1f9";
 }
 
 /* '' */
 .icon-clone:before {
-  content: '\f24d';
+  content: "\f24d";
 }
 
 /* '' */
 .icon-map-pin:before {
-  content: '\f276';
+  content: "\f276";
 }
 
 /* '' */
